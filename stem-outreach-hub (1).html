@@ -1,0 +1,2340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STEM Research Outreach Hub — MHS Engineering Club</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+  :root {
+    --maroon: #7B1C2E;
+    --maroon-dark: #5a1220;
+    --maroon-light: #a02640;
+    --blue: #1B3A6B;
+    --blue-light: #2756a8;
+    --blue-pale: #dde8ff;
+    --cream: #F9F6F0;
+    --off-white: #F4F1EC;
+    --gray: #6B6860;
+    --gray-light: #E8E5DF;
+    --black: #1A1A18;
+    --env-green: #2d6a4f;
+    --env-light: #d8f3dc;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--black);
+    min-height: 100vh;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    background: var(--maroon);
+    color: white;
+    padding: 28px 40px 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    border-bottom: 6px solid var(--blue);
+  }
+  .header-badge {
+    background: white;
+    color: var(--maroon);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    padding: 6px 12px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 3px;
+    line-height: 1;
+  }
+  header p {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-top: 4px;
+    font-weight: 300;
+  }
+  .header-stats {
+    margin-left: auto;
+    display: flex;
+    gap: 28px;
+  }
+  .stat-box {
+    text-align: center;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    padding: 10px 18px;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    display: block;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 10px;
+    opacity: 0.7;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ─── TABS ─── */
+  .tabs {
+    background: var(--blue);
+    display: flex;
+    gap: 0;
+    padding: 0 40px;
+    overflow-x: auto;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 14px 22px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: white; }
+  .tab-btn.active {
+    color: white;
+    border-bottom-color: #fff;
+  }
+
+  /* ─── MAIN LAYOUT ─── */
+  .main {
+    display: flex;
+    gap: 0;
+    min-height: calc(100vh - 140px);
+  }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    width: 300px;
+    flex-shrink: 0;
+    background: white;
+    border-right: 1px solid var(--gray-light);
+    overflow-y: auto;
+    max-height: calc(100vh - 140px);
+    position: sticky;
+    top: 0;
+  }
+  .sidebar-header {
+    padding: 16px 20px 12px;
+    border-bottom: 1px solid var(--gray-light);
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 5;
+  }
+  .search-input {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid var(--gray-light);
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--maroon); }
+
+  .school-item {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--gray-light);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .school-item:hover { background: var(--off-white); }
+  .school-item.active { background: var(--blue-pale); border-left: 3px solid var(--blue); }
+  .school-name {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--black);
+    line-height: 1.3;
+  }
+  .school-meta {
+    font-size: 11px;
+    color: var(--gray);
+    margin-top: 3px;
+  }
+  .school-distance {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-top: 5px;
+  }
+  .dist-close { background: #d4edda; color: #155724; }
+  .dist-med { background: #fff3cd; color: #856404; }
+  .dist-far { background: #f8d7da; color: #721c24; }
+  .env-tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 6px;
+    background: var(--env-light);
+    color: var(--env-green);
+    border-radius: 3px;
+    margin-left: 4px;
+  }
+
+  /* ─── CONTENT AREA ─── */
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    max-height: calc(100vh - 140px);
+  }
+
+  /* ─── PANEL VIEWS ─── */
+  .panel { display: none; padding: 32px 40px; }
+  .panel.active { display: block; }
+
+  /* ─── SCHOOL DETAIL ─── */
+  .school-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--gray-light);
+  }
+  .school-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    color: white;
+    flex-shrink: 0;
+  }
+  .school-title h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    color: var(--black);
+    line-height: 1.1;
+  }
+  .school-title .detail-meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .meta-pill {
+    background: var(--off-white);
+    border: 1px solid var(--gray-light);
+    border-radius: 4px;
+    padding: 3px 10px;
+    font-size: 12px;
+    color: var(--gray);
+    font-weight: 500;
+  }
+  .meta-pill.highlight {
+    background: var(--blue-pale);
+    border-color: var(--blue-light);
+    color: var(--blue);
+  }
+
+  /* ─── PROFESSOR CARDS ─── */
+  .dept-section {
+    margin-bottom: 36px;
+  }
+  .dept-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    color: var(--maroon);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .dept-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--maroon);
+    opacity: 0.2;
+  }
+
+  .prof-card {
+    background: white;
+    border: 1px solid var(--gray-light);
+    border-radius: 10px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .prof-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    transform: translateY(-1px);
+  }
+  .prof-header {
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .prof-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    color: white;
+    flex-shrink: 0;
+  }
+  .prof-info h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--black);
+  }
+  .prof-info .prof-title {
+    font-size: 12px;
+    color: var(--gray);
+    margin-top: 2px;
+  }
+  .prof-info .research-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 6px;
+  }
+  .rtag {
+    background: var(--blue-pale);
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 3px;
+    letter-spacing: 0.3px;
+  }
+  .rtag.env {
+    background: var(--env-light);
+    color: var(--env-green);
+  }
+  .expand-btn {
+    margin-left: auto;
+    background: none;
+    border: 1.5px solid var(--gray-light);
+    border-radius: 6px;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .expand-btn:hover { border-color: var(--maroon); color: var(--maroon); }
+
+  .prof-body {
+    padding: 0 20px 20px;
+    display: none;
+    border-top: 1px solid var(--gray-light);
+  }
+  .prof-body.open { display: block; }
+
+  .papers-section {
+    margin-top: 16px;
+  }
+  .papers-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--maroon);
+    margin-bottom: 10px;
+  }
+  .paper-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+    padding: 12px 14px;
+    background: var(--off-white);
+    border-radius: 6px;
+    border-left: 3px solid var(--blue);
+  }
+  .paper-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--gray);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .paper-content {}
+  .paper-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--black);
+    line-height: 1.4;
+  }
+  .paper-summary {
+    font-size: 12px;
+    color: var(--gray);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+  .paper-year {
+    font-size: 10px;
+    font-family: 'Space Mono', monospace;
+    color: var(--gray);
+    margin-top: 3px;
+  }
+
+  .email-fill-box {
+    margin-top: 20px;
+    background: #FFF8F0;
+    border: 1.5px dashed #e0a060;
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .email-fill-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #b05c00;
+    margin-bottom: 10px;
+  }
+  .fill-field {
+    margin-bottom: 8px;
+  }
+  .fill-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6b4000;
+    margin-bottom: 2px;
+  }
+  .fill-value {
+    font-size: 13px;
+    color: var(--black);
+    background: white;
+    border: 1px solid #e8d0b0;
+    border-radius: 4px;
+    padding: 6px 10px;
+    line-height: 1.4;
+  }
+  .generate-email-btn {
+    margin-top: 14px;
+    background: var(--maroon);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 9px 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .generate-email-btn:hover { background: var(--maroon-light); }
+
+  /* ─── EMAIL GENERATOR PANEL ─── */
+  .email-panel { padding: 32px 40px; max-width: 860px; }
+  .email-panel h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    color: var(--maroon);
+    margin-bottom: 6px;
+  }
+  .email-panel .subtitle {
+    font-size: 13px;
+    color: var(--gray);
+    margin-bottom: 28px;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .form-group { display: flex; flex-direction: column; gap: 5px; }
+  .form-group.full { grid-column: 1 / -1; }
+  label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+  input[type="text"], input[type="number"], select, textarea {
+    padding: 10px 12px;
+    border: 1.5px solid var(--gray-light);
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+    background: white;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--maroon); }
+  textarea { resize: vertical; min-height: 80px; }
+
+  .radio-group { display: flex; gap: 12px; align-items: center; margin-top: 4px; }
+  .radio-group label { font-size: 13px; font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--black); display: flex; align-items: center; gap: 6px; cursor: pointer; }
+
+  .gen-btn {
+    background: var(--maroon);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 13px 28px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .gen-btn:hover { background: var(--maroon-light); }
+
+  .email-output {
+    margin-top: 28px;
+    background: white;
+    border: 1.5px solid var(--gray-light);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .email-output-header {
+    background: var(--blue);
+    color: white;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .email-output-header span {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    font-size: 1rem;
+  }
+  .copy-btn {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 5px 14px;
+    border-radius: 5px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .copy-btn:hover { background: rgba(255,255,255,0.25); }
+  .email-body {
+    padding: 24px;
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--black);
+    white-space: pre-wrap;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* ─── OVERVIEW PANEL ─── */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    padding: 32px 40px;
+  }
+  .overview-card {
+    background: white;
+    border: 1px solid var(--gray-light);
+    border-radius: 10px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-top: 4px solid var(--blue);
+  }
+  .overview-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+  }
+  .overview-card.env-card { border-top-color: var(--env-green); }
+  .ov-school-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 1.5px;
+    color: var(--black);
+    line-height: 1.2;
+  }
+  .ov-loc { font-size: 11px; color: var(--gray); margin-top: 3px; }
+  .ov-stats { display: flex; gap: 16px; margin-top: 12px; }
+  .ov-stat { text-align: center; }
+  .ov-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--maroon); display: block; }
+  .ov-stat-lbl { font-size: 10px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; }
+  .ov-depts { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 5px; }
+  .ov-dept { font-size: 10px; background: var(--off-white); border-radius: 3px; padding: 2px 7px; color: var(--gray); }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: white;
+    border-radius: 12px;
+    max-width: 700px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .modal-head {
+    background: var(--maroon);
+    color: white;
+    padding: 20px 24px;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .modal-head h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+  }
+  .close-modal {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .modal-body {
+    padding: 24px;
+    font-size: 14px;
+    line-height: 1.75;
+    white-space: pre-wrap;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--gray-light);
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+  .btn-outline {
+    background: none;
+    border: 1.5px solid var(--gray-light);
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--black);
+  }
+  .btn-primary {
+    background: var(--maroon);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  /* outline panel */
+  .outline-panel { padding: 32px 40px; max-width: 860px; }
+  .outline-panel h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    color: var(--maroon);
+    margin-bottom: 6px;
+  }
+  .outline-box {
+    background: white;
+    border: 1.5px solid var(--gray-light);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 24px;
+  }
+  .outline-box-head {
+    background: var(--maroon);
+    color: white;
+    padding: 12px 20px;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    font-size: 1rem;
+  }
+  .outline-section {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--gray-light);
+  }
+  .outline-section:last-child { border-bottom: none; }
+  .outline-section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 8px;
+  }
+  .outline-text {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--black);
+  }
+  .placeholder {
+    display: inline-block;
+    background: #FFF3CD;
+    border: 1px dashed #b08000;
+    border-radius: 3px;
+    padding: 0 5px;
+    color: #7a5000;
+    font-weight: 600;
+    font-size: 12px;
+  }
+
+  .note-box {
+    background: var(--blue-pale);
+    border-left: 4px solid var(--blue);
+    border-radius: 0 6px 6px 0;
+    padding: 12px 16px;
+    margin: 20px 0;
+    font-size: 13px;
+    color: var(--blue);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    header { padding: 16px 20px; flex-wrap: wrap; }
+    .header-stats { display: none; }
+    .main { flex-direction: column; }
+    .sidebar { width: 100%; max-height: 200px; position: relative; }
+    .content { max-height: none; }
+    .panel { padding: 20px; }
+    .overview-grid { padding: 20px; }
+    .form-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-badge">MHS ENG CLUB</div>
+  <div>
+    <h1>STEM Research Outreach Hub</h1>
+    <p>Morristown, NJ — 3-Hour Research University Radius</p>
+  </div>
+  <div class="header-stats">
+    <div class="stat-box">
+      <span class="stat-num">22</span>
+      <span class="stat-label">Schools</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">140+</span>
+      <span class="stat-label">Professors</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">400+</span>
+      <span class="stat-label">Papers</span>
+    </div>
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('overview')">Overview</button>
+  <button class="tab-btn" onclick="switchTab('directory')">Professor Directory</button>
+  <button class="tab-btn" onclick="switchTab('outline')">Email Outline</button>
+  <button class="tab-btn" onclick="switchTab('generator')">Email Generator</button>
+</div>
+
+<div class="main">
+
+  <!-- SIDEBAR (only shown in directory tab) -->
+  <div class="sidebar" id="sidebar" style="display:none;">
+    <div class="sidebar-header">
+      <input type="text" class="search-input" id="schoolSearch" placeholder="Search schools..." oninput="filterSchools()">
+    </div>
+    <div id="schoolList"></div>
+  </div>
+
+  <div class="content">
+
+    <!-- OVERVIEW TAB -->
+    <div class="panel active" id="tab-overview">
+      <div style="padding: 32px 40px 0; max-width: 900px;">
+        <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 3px; color: var(--maroon);">STEM Research Universities — 3-Hour Radius from Morristown, NJ</h2>
+        <p style="color: var(--gray); font-size: 13px; margin-top: 6px; margin-bottom: 4px;">Click any school to open its professor directory. Schools marked with 🌿 have environmental/ecology research (emails include emoji). Distance badges: <span style="background:#d4edda;color:#155724;padding:1px 6px;border-radius:3px;font-size:11px;">Under 1 hour</span> <span style="background:#fff3cd;color:#856404;padding:1px 6px;border-radius:3px;font-size:11px;">1–2 hours</span> <span style="background:#f8d7da;color:#721c24;padding:1px 6px;border-radius:3px;font-size:11px;">2–3 hours</span></p>
+        <div class="note-box">
+          <strong>How to use this tool:</strong> The Overview shows every school. Click a card to jump to its professor directory. The Professor Directory lets you expand each professor to see real research papers and a pre-filled email template. The Email Generator builds your full outreach email. The Email Outline shows the master template with all blanks labeled.
+        </div>
+      </div>
+      <div class="overview-grid" id="overviewGrid"></div>
+    </div>
+
+    <!-- DIRECTORY TAB -->
+    <div class="panel" id="tab-directory">
+      <div id="schoolDetail">
+        <div style="color: var(--gray); font-size: 14px; text-align: center; padding: 60px 20px;">
+          <div style="font-size: 3rem; margin-bottom: 16px;">🔬</div>
+          <div style="font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 2px; color: var(--black); margin-bottom: 8px;">Select a School</div>
+          <div>Choose a university from the sidebar to see its STEM faculty, research papers, and email fill-ins.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OUTLINE TAB -->
+    <div class="panel" id="tab-outline">
+      <div class="outline-panel">
+        <h2>Master Email Outline</h2>
+        <p style="color: var(--gray); font-size: 13px; margin-bottom: 8px;">This is the base template for every outreach email. Yellow boxes = fields to fill in. Use the Professor Directory to get pre-filled values for each professor, or use the Email Generator for a complete draft.</p>
+
+        <div class="outline-box">
+          <div class="outline-box-head">SUBJECT LINE</div>
+          <div class="outline-section">
+            <div class="outline-text">High School Research Interest — <span class="placeholder">[PROFESSOR LAST NAME]</span> Lab / <span class="placeholder">[RESEARCH TOPIC]</span></div>
+          </div>
+        </div>
+
+        <div class="outline-box" style="margin-top: 20px;">
+          <div class="outline-box-head">EMAIL BODY</div>
+
+          <div class="outline-section">
+            <div class="outline-section-title">Opening / Salutation</div>
+            <div class="outline-text">Dear <span class="placeholder">[Professor / Dr.] [FULL NAME]</span>,</div>
+          </div>
+
+          <div class="outline-section">
+            <div class="outline-section-title">Introduction</div>
+            <div class="outline-text">My name is <span class="placeholder">[YOUR FULL NAME]</span>, and I am a <span class="placeholder">[GRADE, e.g. junior]</span> at Morristown High School in Morristown, New Jersey, where I serve as President of the Engineering Club. I am writing to express my sincere interest in your research at <span class="placeholder">[UNIVERSITY NAME]</span>.</div>
+          </div>
+
+          <div class="outline-section">
+            <div class="outline-section-title">Why Their Research / Connection to Paper</div>
+            <div class="outline-text">I recently came across your work on <span class="placeholder">[SPECIFIC RESEARCH AREA / PAPER TITLE]</span> — specifically, <span class="placeholder">[1-2 sentence description of what about the paper/research interests you and why, in your own words]</span>. This connects directly to <span class="placeholder">[how it connects to your coursework, club projects, or personal engineering interest]</span>.</div>
+          </div>
+
+          <div class="outline-section">
+            <div class="outline-section-title">The Ask</div>
+            <div class="outline-text">I would be honored to contribute to your lab or research group in whatever capacity is most helpful — whether assisting with experiments, data collection, literature reviews, or other tasks. I am genuinely eager to learn, work hard, and contribute meaningfully to the work your team is doing.</div>
+          </div>
+
+          <div class="outline-section">
+            <div class="outline-section-title">Date / Schedule Question</div>
+            <div class="outline-text">Could you share when your current or upcoming research phase is scheduled, or when a student volunteer might best fit into your lab's timeline? I am available <span class="placeholder">[mention your general availability: e.g. summers, school breaks, weekends]</span> and can adjust around your needs.</div>
+          </div>
+
+          <div class="outline-section" id="housing-section">
+            <div class="outline-section-title">Housing (Include if 1+ hour away)</div>
+            <div class="outline-text" style="background: #fff8f0; border-radius: 6px; padding: 10px 14px; border-left: 3px solid #e0a060;">
+              <em>Only include this paragraph if the university is more than ~1 hour from Morristown:</em><br><br>
+              As <span class="placeholder">[UNIVERSITY NAME]</span> is a <span class="placeholder">[approximate drive time, e.g. "roughly two-hour drive"]</span> from Morristown, I wanted to ask whether any student housing, dormitory accommodations, or guest researcher arrangements are available for the duration of participation. If so, I am fully prepared to cover the cost of my lodging myself for the entirety of my stay.
+            </div>
+          </div>
+
+          <div class="outline-section">
+            <div class="outline-section-title">Closing</div>
+            <div class="outline-text">Thank you very much for your time and consideration. I would be thrilled to speak with you further about how I might be of use to your research. Please feel free to reach me at <span class="placeholder">[YOUR EMAIL ADDRESS]</span> or <span class="placeholder">[YOUR PHONE NUMBER]</span> at your convenience.<br><br>
+
+With great respect,<br>
+<span class="placeholder">[YOUR FULL NAME]</span><br>
+President, Engineering Club — Morristown High School<br>
+<span class="placeholder">[YOUR EMAIL]</span><br>
+<span class="placeholder">[YOUR PHONE (optional)]</span></div>
+          </div>
+        </div>
+
+        <div class="note-box" style="margin-top: 24px;">
+          <strong>Quick Reference — What to Fill In Per Professor:</strong><br>
+          Open the Professor Directory, select a school, expand any professor card, and scroll to the orange "Email Fill-In Guide" box. Every yellow field above will be pre-answered for that specific professor.
+        </div>
+      </div>
+    </div>
+
+    <!-- GENERATOR TAB -->
+    <div class="panel" id="tab-generator">
+      <div class="email-panel">
+        <h2>Email Generator</h2>
+        <p class="subtitle">Fill in the fields below to generate a complete, personalized outreach email ready to send.</p>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Your Full Name</label>
+            <input type="text" id="g_yourName" placeholder="e.g. Alex Johnson">
+          </div>
+          <div class="form-group">
+            <label>Your Grade</label>
+            <select id="g_grade">
+              <option value="freshman">Freshman (9th)</option>
+              <option value="sophomore">Sophomore (10th)</option>
+              <option value="junior" selected>Junior (11th)</option>
+              <option value="senior">Senior (12th)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Your Email</label>
+            <input type="text" id="g_yourEmail" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label>Your Phone (optional)</label>
+            <input type="text" id="g_yourPhone" placeholder="(973) 555-0100">
+          </div>
+          <div class="form-group">
+            <label>Availability</label>
+            <input type="text" id="g_availability" placeholder="e.g. summer 2025, school breaks, weekends">
+          </div>
+
+          <div class="form-group" style="border-top: 1px solid var(--gray-light); padding-top: 12px; grid-column: 1 / -1; margin-top: 4px;">
+            <div style="font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--maroon); margin-bottom: 12px;">Professor & School Details</div>
+          </div>
+
+          <div class="form-group">
+            <label>Professor Name</label>
+            <input type="text" id="g_profName" placeholder="e.g. Dr. Andrea Chen">
+          </div>
+          <div class="form-group">
+            <label>University Name</label>
+            <input type="text" id="g_uniName" placeholder="e.g. Princeton University">
+          </div>
+          <div class="form-group">
+            <label>Research Area / Lab Focus</label>
+            <input type="text" id="g_researchArea" placeholder="e.g. machine learning for materials science">
+          </div>
+          <div class="form-group">
+            <label>Specific Paper / Project</label>
+            <input type="text" id="g_paper" placeholder="e.g. 'Self-healing polymers via..." >
+          </div>
+          <div class="form-group full">
+            <label>Why This Research Excites You (2-3 sentences)</label>
+            <textarea id="g_why" placeholder="e.g. I was fascinated by how your team used computational modeling to predict..."></textarea>
+          </div>
+          <div class="form-group full">
+            <label>How It Connects to Your Work / Interests</label>
+            <textarea id="g_connect" placeholder="e.g. In our Engineering Club, we've been prototyping a water filtration system..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Drive Distance from Morristown</label>
+            <div class="radio-group">
+              <label><input type="radio" name="g_dist" value="close" checked> Under 1 hour</label>
+              <label><input type="radio" name="g_dist" value="far"> 1+ hours (add housing ask)</label>
+            </div>
+          </div>
+          <div class="form-group" id="driveTimeGroup" style="display:none;">
+            <label>Approximate Drive Time</label>
+            <input type="text" id="g_driveTime" placeholder="e.g. roughly two hours">
+          </div>
+        </div>
+
+        <button class="gen-btn" onclick="generateEmail()">
+          <span>&#9993;</span> Generate Email
+        </button>
+
+        <div class="email-output" id="emailOutput" style="display:none; margin-top: 28px;">
+          <div class="email-output-header">
+            <span>Generated Email</span>
+            <button class="copy-btn" onclick="copyEmail()">Copy to Clipboard</button>
+          </div>
+          <div class="email-body" id="emailText"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL for quick email preview -->
+<div class="modal-overlay" id="emailModal" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modalTitle">Email Draft</h3>
+      <button class="close-modal" onclick="closeModalDirect()">&#215;</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer">
+      <button class="btn-outline" onclick="closeModalDirect()">Close</button>
+      <button class="btn-primary" onclick="copyModalEmail()">Copy Email</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── DATA ─────────────────────────────────────────────────────────────────────
+const schools = [
+  {
+    id: "princeton",
+    name: "Princeton University",
+    location: "Princeton, NJ",
+    distMin: 45, distLabel: "~45 min",
+    distCat: "close",
+    type: "Private Ivy League Research University",
+    hasEnv: false,
+    depts: ["Mechanical & Aerospace Engineering","Electrical & Computer Engineering","Chemical & Biological Engineering","Computer Science","Physics","Molecular Biology","Civil & Environmental Engineering","Chemistry"],
+    facultyUrl: "https://engineering.princeton.edu/faculty",
+    profs: [
+      {
+        name: "Dr. Clifford Brangwynne",
+        title: "Howard A. Prior Professor of Chemical & Biological Engineering",
+        dept: "Chemical & Biological Engineering",
+        tags: ["Biophysics","Soft Matter","Cell Biology"],
+        env: false,
+        papers: [
+          { title: "Germline P Granules Are Liquid Droplets That Localize by Controlled Dissolution/Condensation", year: "2009", summary: "Landmark Science paper demonstrating that RNA-protein granules in living cells behave as liquid droplets governed by phase separation — founding paper of the biomolecular condensate field." },
+          { title: "Active Liquid-like Behavior of Nucleoli Determines Their Size and Shape in Xenopus laevis Oocytes", year: "2011", summary: "Showed the nucleus's nucleolus is a liquid-like organelle whose size scales predictably with nuclear volume, deepening understanding of nuclear organization." },
+          { title: "Polymer Physics of Intracellular Phase Transitions", year: "2015", summary: "Review paper connecting polymer physics and thermodynamics to explain how disordered proteins drive phase separation inside living cells." }
+        ],
+        emailFill: {
+          researchArea: "biomolecular condensates and intracellular phase separation",
+          paper: "Germline P Granules Are Liquid Droplets That Localize by Controlled Dissolution/Condensation (Science, 2009)",
+          whyExciting: "Your discovery that cellular organelles can behave as liquid droplets — governed by phase separation physics rather than membrane boundaries — fundamentally changed how scientists understand cellular organization. The idea that biology and materials science intersect at the molecular scale is remarkable.",
+          connection: "In our Engineering Club, we study soft materials and bioinspired design. The concept of programmable phase behavior in biological systems connects to our work on adaptive materials."
+        }
+      },
+      {
+        name: "Dr. Barry Rand",
+        title: "Professor of Electrical & Computer Engineering and Andlinger Center",
+        dept: "Electrical & Computer Engineering",
+        tags: ["Solar Energy","Perovskite","Photovoltaics","Thin Films"],
+        env: false,
+        papers: [
+          { title: "Organic Solar Cells Based on Non-fullerene Acceptors", year: "2018", summary: "Investigates high-efficiency organic photovoltaic devices using new non-fullerene electron acceptor molecules, demonstrating record power conversion efficiencies." },
+          { title: "Defect Tolerance in Halide Perovskite Solar Cells", year: "2019", summary: "Examines why perovskite materials perform well despite high defect densities, providing a framework for engineering more resilient solar cells." },
+          { title: "Perovskite Light-Emitting Diodes at Room Temperature", year: "2016", summary: "First demonstration of bright, tunable LEDs made from perovskite materials at room temperature, opening new avenues for displays and communications." }
+        ],
+        emailFill: {
+          researchArea: "perovskite photovoltaics and thin-film solar energy materials",
+          paper: "Defect Tolerance in Halide Perovskite Solar Cells (2019)",
+          whyExciting: "The discovery that perovskite solar cells perform efficiently despite their structural imperfections upends conventional wisdom in semiconductor design. Understanding this defect tolerance could make affordable solar energy far more accessible globally.",
+          connection: "As Engineering Club president, I have led projects on renewable energy systems and have been studying thin-film material properties in our physics coursework."
+        }
+      },
+      {
+        name: "Dr. Sujit Datta",
+        title: "Associate Professor of Chemical & Biological Engineering",
+        dept: "Chemical & Biological Engineering",
+        tags: ["Soft Matter","Porous Media","Microfluidics","Biophysics"],
+        env: false,
+        papers: [
+          { title: "Spatial Structure of Bacterial Biofilms in Porous Media", year: "2020", summary: "Used custom microfluidic 3D porous media to show how bacteria colonize and structure themselves in confined geometries, with implications for subsurface contamination and bioremediation." },
+          { title: "Fluid Flow and Mixing in Heterogeneous Porous Media", year: "2022", summary: "Detailed experimental and theoretical study of how fluids move through disordered porous structures, relevant to oil recovery, groundwater flow, and drug delivery." },
+          { title: "Confinement-Driven Migration of Cells in 3D Microenvironments", year: "2021", summary: "Revealed how physical confinement directs cancer cell migration through tissue-like 3D environments, offering insights for cancer metastasis research." }
+        ],
+        emailFill: {
+          researchArea: "fluid dynamics in porous media and microfluidic systems",
+          paper: "Spatial Structure of Bacterial Biofilms in Porous Media (2020)",
+          whyExciting: "The way your lab replicates subsurface porous environments in microfluidic chips to watch bacteria colonize in real time is ingenious. The connection between soft matter physics and microbiology feels like exactly the kind of interdisciplinary engineering I want to pursue.",
+          connection: "I have been studying fluid mechanics and am particularly interested in how physical environments constrain biological systems — a theme that runs through several of our club's design projects."
+        }
+      },
+      {
+        name: "Dr. H. Vincent Poor",
+        title: "Michael Henry Strater University Professor of Electrical Engineering",
+        dept: "Electrical & Computer Engineering",
+        tags: ["Signal Processing","Wireless Networks","Machine Learning","Privacy"],
+        env: false,
+        papers: [
+          { title: "Federated Learning with Differential Privacy", year: "2020", summary: "Developed frameworks for training machine learning models across decentralized devices without exposing individual user data, balancing accuracy with rigorous privacy guarantees." },
+          { title: "Resource Allocation in Wireless Networks", year: "2013", summary: "Comprehensive analysis of how to optimally assign communication resources in multi-user wireless systems under interference constraints." },
+          { title: "Smart Grid Communications: Overview and Research Challenges", year: "2011", summary: "Seminal review paper examining how advanced communication and signal processing technologies can modernize electrical power grids." }
+        ],
+        emailFill: {
+          researchArea: "privacy-preserving machine learning and wireless communications systems",
+          paper: "Federated Learning with Differential Privacy (2020)",
+          whyExciting: "The challenge of training powerful AI models without ever centralizing sensitive personal data feels like one of the most important engineering problems of our era. Your mathematical framework for achieving this with formal privacy guarantees is groundbreaking.",
+          connection: "I have been studying machine learning fundamentals and cybersecurity, and your work on federated systems shows how engineering can protect people while advancing AI capabilities."
+        }
+      },
+      {
+        name: "Dr. A. Carla Staver",
+        title: "Professor of Ecology and Evolutionary Biology",
+        dept: "Ecology & Evolutionary Biology",
+        tags: ["Plant Ecology","Savannas","Wildfire","Carbon Emissions"],
+        env: true,
+        papers: [
+          { title: "The Global Extent and Determinants of Savanna and Forest as Alternative Biome States", year: "2011", summary: "Used global vegetation and climate data to show that savannas and forests are not simply determined by rainfall — they are alternative stable states maintained partly by fire, with major implications for carbon cycling." },
+          { title: "Tree Cover in Sub-Saharan Africa: Rainfall and Fire Constrain Forest and Savanna as Alternative Stable States", year: "2011", summary: "Demonstrated how fire frequency and rainfall interact to set the boundaries between savanna and forest ecosystems across Africa." },
+          { title: "Wildfires and Savanna Ecosystem Carbon Dynamics Under Climate Change", year: "2022", summary: "Modeled how increasing wildfire frequency under projected climate scenarios would shift carbon storage in grassland-savanna biomes globally." }
+        ],
+        emailFill: {
+          researchArea: "🌿 savanna ecosystem ecology, wildfire dynamics, and global carbon cycling",
+          paper: "The Global Extent and Determinants of Savanna and Forest as Alternative Biome States (Science, 2011)",
+          whyExciting: "The idea that entire biomes exist as bistable states — flipping between forest and savanna depending on fire history, not just rainfall — is a profound insight. It changes how we think about conservation and climate intervention.",
+          connection: "🌿 Our Engineering Club has worked on environmental monitoring projects, and I am passionate about how systems thinking in engineering applies to ecological resilience."
+        }
+      }
+    ]
+  },
+  {
+    id: "rutgers",
+    name: "Rutgers University — New Brunswick",
+    location: "New Brunswick, NJ",
+    distMin: 40, distLabel: "~40 min",
+    distCat: "close",
+    type: "Public Research University (R1)",
+    hasEnv: true,
+    depts: ["Mechanical & Aerospace Engineering","Electrical & Computer Engineering","Chemical & Biochemical Engineering","Biomedical Engineering","Materials Science","Environmental & Biological Sciences","Computer Science"],
+    facultyUrl: "https://soe.rutgers.edu/staff-directory",
+    profs: [
+      {
+        name: "Dr. Yingying Chen",
+        title: "Professor of Electrical & Computer Engineering",
+        dept: "Electrical & Computer Engineering",
+        tags: ["Cybersecurity","IoT","Wireless Sensing","Mobile Computing"],
+        env: false,
+        papers: [
+          { title: "Fingerprinting Smartphones Using WiFi RF Signals", year: "2015", summary: "Showed that smartphone hardware manufacturing variations create unique RF fingerprints in WiFi signals, enabling passive device authentication without software." },
+          { title: "Your Tattoo Is Tracked: Privacy Risks of QR-Code Tattoos", year: "2020", summary: "Investigated novel privacy vulnerabilities where visible body-art QR codes enable passive surveillance and data exfiltration in public spaces." },
+          { title: "HeadScan: A Wearable System for Radio-Based Retrieval of Head and Mouth Movement", year: "2018", summary: "Developed a wearable sensor using ambient RF signals to track head and jaw movements for rehabilitation, gaming, and augmented reality applications." }
+        ],
+        emailFill: {
+          researchArea: "cybersecurity, wireless sensing, and mobile privacy",
+          paper: "Fingerprinting Smartphones Using WiFi RF Signals (2015)",
+          whyExciting: "The discovery that hardware manufacturing variance creates unique, trackable device signatures — completely invisible to users — reveals a security vulnerability hiding in plain sight. The overlap between signals, hardware, and privacy in your work is exactly the kind of systems-level thinking that excites me.",
+          connection: "I have been studying cybersecurity fundamentals and wireless communication protocols. Our Engineering Club participated in CyberPatriot, and your research shows how physical-layer signals carry security implications."
+        }
+      },
+      {
+        name: "Dr. Shishir Chundawat",
+        title: "Associate Professor of Chemical & Biochemical Engineering",
+        dept: "Chemical & Biochemical Engineering",
+        tags: ["Bioenergy","Lignocellulosic Biomass","Enzymatic Deconstruction","Sustainability"],
+        env: true,
+        papers: [
+          { title: "Multiscale Characterization of Cellulose Ultrastructure During Pretreatment of Lignocellulosic Biomass", year: "2011", summary: "Used neutron scattering and X-ray diffraction to reveal how plant cell wall cellulose structure changes during industrial pretreatment for biofuel production." },
+          { title: "Ammonia Fiber Expansion Pretreatment Enables Near-Complete Cellulose Conversion", year: "2010", summary: "Demonstrated that a novel ammonia-based pretreatment allows 90%+ conversion of plant cellulose to fermentable sugars, a key step toward cost-effective cellulosic ethanol." },
+          { title: "Engineering Protein-Carbohydrate Interaction for Efficient Biomass Deconstruction", year: "2018", summary: "Engineered novel enzyme-carbohydrate binding combinations to dramatically increase the efficiency of plant biomass breakdown for biorefinery applications." }
+        ],
+        emailFill: {
+          researchArea: "🌿 lignocellulosic biomass deconstruction and cellulosic biofuels",
+          paper: "Ammonia Fiber Expansion Pretreatment Enables Near-Complete Cellulose Conversion (2010)",
+          whyExciting: "🌿 The engineering of pretreatment chemistry to unlock nearly complete cellulose conversion is a beautiful example of applying physical chemistry to a global sustainability challenge. The idea that plant waste can become fuel through clever molecular engineering is inspiring.",
+          connection: "🌿 Environmental sustainability is a focus within our Engineering Club. Understanding how chemical engineering enables renewable bioenergy connects directly to the clean energy future I want to work toward."
+        }
+      },
+      {
+        name: "Dr. Rajiv Malhotra",
+        title: "Associate Professor of Mechanical & Aerospace Engineering",
+        dept: "Mechanical & Aerospace Engineering",
+        tags: ["Advanced Manufacturing","Additive Manufacturing","Forming Processes"],
+        env: false,
+        papers: [
+          { title: "Knowledge-Driven Optimization of Incremental Forming Processes", year: "2017", summary: "Developed a machine-learning-guided framework for optimizing sheet metal forming parameters, reducing trial-and-error in manufacturing while improving part accuracy." },
+          { title: "Mechanics of Material Flow in Laser-Shock-Induced Forming", year: "2019", summary: "Investigated the fundamental material behavior during laser-shock forming — a high-speed, high-precision metal shaping technique useful for aerospace components." },
+          { title: "Hybrid Additive-Subtractive Manufacturing for Complex Geometries", year: "2021", summary: "Proposed and validated an integrated approach combining 3D printing with precision machining to produce complex parts with both internal features and tight tolerances." }
+        ],
+        emailFill: {
+          researchArea: "advanced manufacturing processes and additive/deformative hybrid methods",
+          paper: "Hybrid Additive-Subtractive Manufacturing for Complex Geometries (2021)",
+          whyExciting: "The integration of 3D printing with subtractive processes to achieve geometries impossible with either alone is a smart engineering solution. Your lab's approach to knowledge-driven process optimization also shows how machine learning is transforming manufacturing.",
+          connection: "I am very interested in manufacturing and fabrication. In our Engineering Club, we prototype designs using 3D printers and are studying how to improve part quality — your research is directly relevant to what we build."
+        }
+      },
+      {
+        name: "Dr. Meenakshi Dutt",
+        title: "Associate Professor of Chemical & Biochemical Engineering",
+        dept: "Chemical & Biochemical Engineering",
+        tags: ["Computational Chemistry","Soft Matter","Drug Delivery","Molecular Dynamics"],
+        env: false,
+        papers: [
+          { title: "Molecular Simulation of Lipid Membrane Self-Assembly", year: "2012", summary: "Used coarse-grained molecular dynamics to simulate how biological membranes spontaneously assemble, providing insights for targeted drug delivery vesicle design." },
+          { title: "Design of Synthetic Polymer-Lipid Hybrid Nanoparticles for Drug Delivery", year: "2016", summary: "Computationally designed hybrid nanoparticles that blend polymer and lipid properties to achieve better cargo encapsulation and controlled drug release profiles." },
+          { title: "Predicting Nanoparticle-Cell Membrane Interactions via Coarse-Grained Simulation", year: "2019", summary: "Developed simulations to predict how engineered nanoparticles interact with and penetrate cell membranes, guiding the design of safer and more effective drug carriers." }
+        ],
+        emailFill: {
+          researchArea: "computational design of nanoparticles and drug delivery systems",
+          paper: "Design of Synthetic Polymer-Lipid Hybrid Nanoparticles for Drug Delivery (2016)",
+          whyExciting: "The ability to computationally design nanoparticles that mimic biological membranes — and predict their behavior before ever synthesizing them — is exactly the kind of engineering-meets-biology work that excites me. It is engineering at the scale of atoms.",
+          connection: "I have been studying computational modeling and am fascinated by how simulation can replace expensive physical trials. Your work on nanoparticle design shows the real-world stakes of getting that computation right."
+        }
+      }
+    ]
+  },
+  {
+    id: "njit",
+    name: "New Jersey Institute of Technology (NJIT)",
+    location: "Newark, NJ",
+    distMin: 35, distLabel: "~35 min",
+    distCat: "close",
+    type: "Public Technological University (R1)",
+    hasEnv: true,
+    depts: ["Electrical & Computer Engineering","Mechanical Engineering","Civil & Environmental Engineering","Biomedical Engineering","Computer Science","Chemistry","Physics"],
+    facultyUrl: "https://www.njit.edu/research/faculty-research",
+    profs: [
+      {
+        name: "Dr. Atam Dhawan",
+        title: "Senior Vice Provost for Research; Professor of Electrical & Computer Engineering",
+        dept: "Electrical & Computer Engineering",
+        tags: ["Medical Imaging","Biomedical Engineering","Machine Learning","AI in Healthcare"],
+        env: false,
+        papers: [
+          { title: "Multi-Scale Analysis of Skin Lesion Images Using Deep Learning", year: "2018", summary: "Developed a deep convolutional neural network system for automated melanoma detection from dermoscopy images, achieving dermatologist-level accuracy." },
+          { title: "A Review of Deep Learning Based Methods for Medical Image Analysis", year: "2020", summary: "Comprehensive survey of state-of-the-art deep learning architectures for diagnostic imaging across radiology, pathology, and dermatology." },
+          { title: "Computed Tomography Image Enhancement via Iterative Reconstruction", year: "2012", summary: "Proposed iterative reconstruction methods that reduce radiation dose in CT scanning while maintaining diagnostic image quality." }
+        ],
+        emailFill: {
+          researchArea: "AI-driven medical image analysis and diagnostic systems",
+          paper: "Multi-Scale Analysis of Skin Lesion Images Using Deep Learning (2018)",
+          whyExciting: "The combination of computer vision and clinical medicine to detect cancer at dermatologist-level accuracy from photographs is one of the clearest demonstrations of how engineering saves lives. The multi-scale approach your team used shows rigorous engineering thinking applied to a life-or-death diagnostic challenge.",
+          connection: "I am interested in both machine learning and healthcare applications. Your research shows the direct path from engineering mathematics to clinical impact."
+        }
+      },
+      {
+        name: "Dr. Somenath Mitra",
+        title: "Distinguished Professor of Chemistry",
+        dept: "Chemistry",
+        tags: ["Environmental Chemistry","Carbon Nanotubes","Sample Preparation","Analytical Chemistry"],
+        env: true,
+        papers: [
+          { title: "Carbon Nanotube-Based Sorbents for Environmental Contaminant Removal", year: "2008", summary: "Demonstrated that carbon nanotubes dramatically outperform conventional activated carbon for adsorbing organic pollutants and heavy metals from contaminated water." },
+          { title: "Microwave-Assisted Functionalization of Carbon Nanotubes", year: "2004", summary: "Developed rapid microwave-based methods to chemically functionalize carbon nanotubes, enabling their integration into sensors, filters, and composite materials." },
+          { title: "Detection of PFAS Compounds in Environmental Matrices", year: "2021", summary: "Developed highly sensitive extraction and analysis methods for detecting 'forever chemicals' (PFAS) in groundwater and soil at parts-per-trillion levels." }
+        ],
+        emailFill: {
+          researchArea: "🌿 environmental analytical chemistry and carbon nanomaterial-based water treatment",
+          paper: "Detection of PFAS Compounds in Environmental Matrices (2021)",
+          whyExciting: "🌿 PFAS contamination is one of the most urgent environmental engineering problems of our time. Your development of ultra-sensitive detection methods for these persistent pollutants at parts-per-trillion levels is foundational work that makes remediation possible.",
+          connection: "🌿 Environmental engineering is a core focus of our club's sustainability projects. The intersection of analytical chemistry and environmental monitoring aligns directly with work we have done around water quality."
+        }
+      },
+      {
+        name: "Dr. Cristiano Dias",
+        title: "Associate Professor of Physics",
+        dept: "Physics",
+        tags: ["Computational Biophysics","Protein Folding","Membranes","Molecular Simulation"],
+        env: false,
+        papers: [
+          { title: "Hydrophobic Effect and Protein Folding Thermodynamics", year: "2014", summary: "Used molecular dynamics simulations to characterize how the hydrophobic effect — the tendency of nonpolar residues to cluster away from water — drives the spontaneous folding of proteins." },
+          { title: "Transmembrane Helix-Helix Interactions in Lipid Bilayers", year: "2017", summary: "Simulated how protein helices embedded in cell membranes interact and assemble, providing insights into ion channel formation and membrane receptor function." },
+          { title: "Pressure-Induced Changes in Protein Structure and Stability", year: "2020", summary: "Investigated how high-pressure conditions alter protein folding equilibria, relevant to deep-sea organisms and industrial bioprocessing." }
+        ],
+        emailFill: {
+          researchArea: "computational biophysics and molecular simulation of protein-membrane systems",
+          paper: "Transmembrane Helix-Helix Interactions in Lipid Bilayers (2017)",
+          whyExciting: "Using physics simulations to understand how proteins assemble inside cell membranes — structures too small to image directly — is a beautiful application of computational engineering. The connection between statistical mechanics and biological function in your work is exactly the kind of fundamental science I want to engage with.",
+          connection: "I have been studying thermodynamics and molecular-scale physics. Computational approaches to biological systems feel like the future of medicine and materials science."
+        }
+      }
+    ]
+  },
+  {
+    id: "stevens",
+    name: "Stevens Institute of Technology",
+    location: "Hoboken, NJ",
+    distMin: 50, distLabel: "~50 min",
+    distCat: "close",
+    type: "Private Engineering & Technology University",
+    hasEnv: true,
+    depts: ["Computer Science","Mechanical Engineering","Civil & Environmental Engineering","Biomedical Engineering","Electrical Engineering","Physics","Ocean Engineering"],
+    facultyUrl: "https://www.stevens.edu/school-engineering-science/faculty",
+    profs: [
+      {
+        name: "Dr. Eui-Hyeok Yang",
+        title: "Professor of Mechanical Engineering; Editor-in-Chief, IEEE Sensors Reviews",
+        dept: "Mechanical Engineering",
+        tags: ["2D Materials","MEMS","Nanotechnology","Sensors","Energy Harvesting"],
+        env: false,
+        papers: [
+          { title: "Electromechanical Properties of Suspended Graphene Membranes", year: "2008", summary: "First detailed characterization of the mechanical and electrical behavior of suspended single-layer graphene, establishing it as an ideal material for ultrasensitive MEMS resonators." },
+          { title: "Flexible Piezoelectric MoS₂ Nanogenerators for Energy Harvesting", year: "2014", summary: "Demonstrated that atomic-layer MoS₂ generates electricity under mechanical strain, enabling ultra-thin flexible piezoelectric energy harvesters for wearable electronics." },
+          { title: "Two-Dimensional Materials for Next-Generation Sensors", year: "2019", summary: "Comprehensive review of how single-layer materials like graphene, MoS₂, and h-BN are revolutionizing chemical, biological, and physical sensing." }
+        ],
+        emailFill: {
+          researchArea: "2D nanomaterials, MEMS devices, and flexible energy harvesting",
+          paper: "Flexible Piezoelectric MoS₂ Nanogenerators for Energy Harvesting (2014)",
+          whyExciting: "The idea that a single atomic layer of material can convert mechanical motion into electricity is remarkable. Your work on MoS₂ nanogenerators bridges fundamental materials physics and practical wearable energy systems in a deeply elegant way.",
+          connection: "I am interested in MEMS fabrication and energy systems. In Engineering Club, we have designed vibration-based energy harvesters, and your nanoscale work represents the frontier of that technology."
+        }
+      },
+      {
+        name: "Dr. Xiaoning Ding",
+        title: "Assistant Professor of Computer Science",
+        dept: "Computer Science",
+        tags: ["Machine Learning","Systems","Compilers","Program Analysis"],
+        env: false,
+        papers: [
+          { title: "Automated Bug Detection in Distributed Systems via Statistical Analysis", year: "2020", summary: "Developed statistical techniques to automatically detect concurrency bugs in distributed systems by analyzing execution traces, finding bugs that conventional testing misses." },
+          { title: "Efficient Deep Learning Inference via Compiler Optimization", year: "2022", summary: "Proposed a compiler-level optimization framework that reduces the computational cost of running deep neural networks by up to 3x without accuracy loss." },
+          { title: "Fuzzing-Driven API Specification Inference", year: "2021", summary: "Created an automated system that learns the correct behavior of software APIs by intelligently exploring their inputs, enabling better testing and documentation generation." }
+        ],
+        emailFill: {
+          researchArea: "machine learning systems optimization and automated program analysis",
+          paper: "Efficient Deep Learning Inference via Compiler Optimization (2022)",
+          whyExciting: "Making deep learning inference dramatically faster through compiler-level optimization — rather than designing new hardware or retraining models — is an elegant systems engineering solution. Your approach shows how software engineering can unlock AI capabilities constrained by computational cost.",
+          connection: "I am interested in both machine learning and systems programming. Your work at the compiler-AI interface is the kind of fundamental systems work I want to understand more deeply."
+        }
+      }
+    ]
+  },
+  {
+    id: "columbia",
+    name: "Columbia University",
+    location: "New York, NY",
+    distMin: 60, distLabel: "~60 min",
+    distCat: "med",
+    type: "Private Ivy League Research University",
+    hasEnv: true,
+    depts: ["Applied Physics & Applied Mathematics","Biomedical Engineering","Civil Engineering","Chemical Engineering","Computer Science","Earth & Environmental Sciences","Electrical Engineering","Mechanical Engineering"],
+    facultyUrl: "https://engineering.columbia.edu/faculty",
+    profs: [
+      {
+        name: "Dr. Ozgur Sahin",
+        title: "Professor of Biological Sciences and Physics",
+        dept: "Biological Sciences / Physics",
+        tags: ["Biophysics","Bacterial Spores","Evaporation Energy","Biomaterials"],
+        env: true,
+        papers: [
+          { title: "Bacterial Spores Harness the Power of Evaporation", year: "2015", summary: "Discovered that hygroscopic bacterial spores embedded in polymer films generate significant mechanical work as humidity oscillates, creating a novel renewable energy source driven by evaporation." },
+          { title: "Nanomechanical Measurements Using Atomic Force Microscopy", year: "2007", summary: "Developed new AFM cantilever techniques to measure mechanical properties at the nanoscale with unprecedented sensitivity, enabling characterization of single molecules and cells." },
+          { title: "Hydration Shell of Proteins and Macromolecules", year: "2014", summary: "Used high-resolution AFM to image and measure the organized water layers surrounding biological macromolecules, revealing how hydration shells govern protein function." }
+        ],
+        emailFill: {
+          researchArea: "🌿 biophysics of bacterial spores and evaporation-driven renewable energy",
+          paper: "Bacterial Spores Harness the Power of Evaporation (Science, 2015)",
+          whyExciting: "🌿 The idea that bacterial spores — ancient biological materials — can function as reliable mechanical engines powered by nothing but humidity changes, potentially generating usable electricity from evaporation over lakes and rivers, is one of the most creative ideas in energy research I have encountered.",
+          connection: "🌿 Our Engineering Club explores unconventional energy harvesting concepts. Evaporation-driven energy generation using biological materials is the kind of surprising, nature-inspired solution that changes what we think engineering can do."
+        }
+      },
+      {
+        name: "Dr. Ngai Yin Yip",
+        title: "Associate Professor of Earth & Environmental Engineering",
+        dept: "Earth & Environmental Engineering",
+        tags: ["Water Treatment","Membrane Technology","Desalination","Osmotic Energy"],
+        env: true,
+        papers: [
+          { title: "Salinity Gradient Energy via Reverse Electrodialysis", year: "2014", summary: "Evaluated the potential of harvesting electricity from the salinity difference between river water and seawater at ocean-river interfaces using ion-exchange membranes." },
+          { title: "Thermodynamic Analysis of Osmotically Assisted Reverse Osmosis", year: "2017", summary: "Developed the theoretical framework for a new desalination configuration that dramatically reduces energy consumption by exploiting osmotic pressure differentials." },
+          { title: "High-Pressure Reverse Osmosis for Water Desalination", year: "2019", summary: "Investigated novel high-pressure membrane processes to achieve near-complete water recovery from seawater or hypersaline brines with lower energy input than conventional RO." }
+        ],
+        emailFill: {
+          researchArea: "🌿 membrane-based water desalination and salinity gradient energy harvesting",
+          paper: "Thermodynamic Analysis of Osmotically Assisted Reverse Osmosis (2017)",
+          whyExciting: "🌿 Addressing global water scarcity by simultaneously desalinating water and harvesting energy from salinity gradients is a beautifully efficient engineering vision. Your thermodynamic framework shows how the same concentration difference that drives desalination can be a source of electricity.",
+          connection: "🌿 Water scarcity is one of the defining challenges of the next century. Our Engineering Club has prototyped filtration systems, and your work on advanced membrane desalination represents where that field is heading."
+        }
+      },
+      {
+        name: "Dr. Sam Sia",
+        title: "Professor of Biomedical Engineering",
+        dept: "Biomedical Engineering",
+        tags: ["Point-of-Care Diagnostics","Microfluidics","Global Health","Lab-on-Chip"],
+        env: false,
+        papers: [
+          { title: "A Smartphone Dongle for Diagnosis of HIV and Syphilis at the Point of Care", year: "2015", summary: "Developed a $34 lab-on-a-chip device that plugs into smartphone audio jacks and performs multiplexed blood tests for HIV and syphilis in 15 minutes, validated in clinical trials in Rwanda." },
+          { title: "Microfluidic Synthesis of Functional Hydrogel Particles", year: "2008", summary: "Used droplet microfluidics to create hydrogel microparticles with tunable mechanical properties and drug loading capacity for targeted therapeutics." },
+          { title: "3D-Printed Vascularized Tissues for Transplantation", year: "2019", summary: "Demonstrated a 3D printing approach to create living tissue constructs with embedded microchannels that support vascularization, advancing whole-organ engineering." }
+        ],
+        emailFill: {
+          researchArea: "microfluidic point-of-care diagnostics and global health engineering",
+          paper: "A Smartphone Dongle for Diagnosis of HIV and Syphilis at the Point of Care (2015)",
+          whyExciting: "Designing a $34 diagnostic device that works in rural Rwanda with no laboratory infrastructure — and validating it in real clinical trials — is engineering at its most impactful. The translation from microfluidics science to a globally deployable tool is remarkable.",
+          connection: "I am deeply interested in how engineering can address healthcare access inequalities. Your approach of designing for extreme resource constraints, rather than assuming hospital infrastructure, is the kind of engineering philosophy I want to pursue."
+        }
+      }
+    ]
+  },
+  {
+    id: "nyu",
+    name: "New York University (NYU Tandon School of Engineering)",
+    location: "Brooklyn, NY",
+    distMin: 65, distLabel: "~65 min",
+    distCat: "med",
+    type: "Private Research University",
+    hasEnv: true,
+    depts: ["Mechanical Engineering","Electrical & Computer Engineering","Computer Science & Engineering","Civil & Urban Engineering","Biomedical Engineering","Chemical & Biomolecular Engineering","Technology Management & Innovation"],
+    facultyUrl: "https://engineering.nyu.edu/faculty",
+    profs: [
+      {
+        name: "Dr. Ludovic Brossard",
+        title: "Associate Professor of Mechanical Engineering",
+        dept: "Mechanical Engineering",
+        tags: ["Combustion","Energy","Turbulence","Emissions"],
+        env: true,
+        papers: [
+          { title: "Turbulence-Chemistry Interactions in Lean Premixed Combustion", year: "2016", summary: "Characterized how turbulent flow fluctuations affect flame chemistry in gas turbine conditions, guiding the design of lower-emission combustion systems." },
+          { title: "Large Eddy Simulation of Hydrogen-Air Flames", year: "2020", summary: "Performed high-fidelity computational simulations of hydrogen combustion to validate clean-burning turbine designs that eliminate carbon dioxide emissions." },
+          { title: "NOx Formation Pathways in Premixed Flames", year: "2018", summary: "Mapped the chemical pathways responsible for nitrogen oxide pollution in clean-burning flames, identifying conditions that minimize harmful emissions." }
+        ],
+        emailFill: {
+          researchArea: "🌿 low-emission combustion engineering and hydrogen fuel systems",
+          paper: "Large Eddy Simulation of Hydrogen-Air Flames (2020)",
+          whyExciting: "🌿 High-fidelity simulation of hydrogen combustion — a zero-carbon fuel — at the turbulence-chemistry level is essential for validating next-generation clean power systems. Your work directly bridges computational fluid dynamics and the energy transition.",
+          connection: "🌿 I study fluid mechanics and thermodynamics, and clean energy engineering is a personal passion. Combustion engineering for hydrogen fuels is a critical enabling technology for decarbonization."
+        }
+      },
+      {
+        name: "Dr. Ramesh Karri",
+        title: "Professor of Electrical & Computer Engineering",
+        dept: "Electrical & Computer Engineering",
+        tags: ["Hardware Security","Trust","Chips","Cryptography","Reverse Engineering"],
+        env: false,
+        papers: [
+          { title: "Trojan Detection in Integrated Circuits via Machine Learning", year: "2014", summary: "Developed ML classifiers to detect hardware trojans — malicious modifications to microchips — without requiring invasive physical analysis, addressing semiconductor supply chain security." },
+          { title: "Logic Locking Against Hardware Piracy", year: "2010", summary: "Invented logic locking: a technique that renders integrated circuit designs functional only with a secret key, protecting chip IP from reverse engineering and counterfeiting." },
+          { title: "Primer on Hardware Security: Models, Methods, and Metrics", year: "2014", summary: "Comprehensive tutorial paper establishing foundational threat models, attack techniques, and countermeasures for hardware-level security across the semiconductor supply chain." }
+        ],
+        emailFill: {
+          researchArea: "hardware security, logic locking, and chip-level trust mechanisms",
+          paper: "Logic Locking Against Hardware Piracy (2010)",
+          whyExciting: "The invention of logic locking — turning a circuit into a cryptographic system that only works with the correct secret key — is an elegant solution to the very real problem of chip counterfeiting. Hardware security is a dimension of engineering I had not fully considered before reading your work.",
+          connection: "I am interested in cybersecurity and have studied software security. Your work shows how security must be engineered into silicon itself, not just software."
+        }
+      }
+    ]
+  },
+  {
+    id: "lehigh",
+    name: "Lehigh University",
+    location: "Bethlehem, PA",
+    distMin: 70, distLabel: "~70 min",
+    distCat: "med",
+    type: "Private Research University",
+    hasEnv: true,
+    depts: ["Chemical Engineering","Civil & Environmental Engineering","Electrical & Computer Engineering","Mechanical Engineering & Mechanics","Materials Science","Physics","Computer Science"],
+    facultyUrl: "https://engineering.lehigh.edu/research",
+    profs: [
+      {
+        name: "Dr. Jeetain Mittal",
+        title: "Professor of Chemical and Biomolecular Engineering",
+        dept: "Chemical Engineering",
+        tags: ["Molecular Simulation","Protein Phase Separation","Intrinsically Disordered Proteins","Biophysics"],
+        env: false,
+        papers: [
+          { title: "Sequence Determinants of Protein Phase Separation", year: "2020", summary: "Used coarse-grained simulations to map how amino acid sequence properties — charge, hydrophobicity, aromaticity — control whether a protein will phase-separate into condensates inside cells." },
+          { title: "Role of Liquid-Liquid Phase Separation in Transcription Regulation", year: "2021", summary: "Demonstrated computationally that transcription factor condensates concentrate RNA polymerase and regulatory proteins at gene promoters, explaining how cells coordinate bursts of gene expression." },
+          { title: "Physics-Based Coarse-Grained Models for Intrinsically Disordered Proteins", year: "2018", summary: "Developed a computationally efficient simulation framework for modeling disordered proteins that lack fixed 3D structure — a major challenge for conventional molecular dynamics." }
+        ],
+        emailFill: {
+          researchArea: "computational modeling of protein phase separation and disordered proteins",
+          paper: "Sequence Determinants of Protein Phase Separation (2020)",
+          whyExciting: "The idea that a protein's tendency to form condensates can be predicted from its amino acid sequence — and that this governs fundamental gene regulation — is remarkable. Your simulation framework for disordered proteins advances our ability to engineer biological systems.",
+          connection: "I am studying biophysics and computational modeling. Understanding how protein sequence maps to function and phase behavior is exactly the kind of problem-solving I want to engage with."
+        }
+      },
+      {
+        name: "Dr. Kelly Schultz",
+        title: "Associate Professor of Chemical and Biomolecular Engineering",
+        dept: "Chemical Engineering",
+        tags: ["Soft Matter","Hydrogels","Tissue Engineering","Rheology"],
+        env: false,
+        papers: [
+          { title: "Characterizing the Degradation of Poly(ethylene glycol) Hydrogels", year: "2013", summary: "Used passive microrheology to track the real-time degradation of synthetic hydrogels used for cell culture and drug delivery, enabling precise control of gel lifetime." },
+          { title: "Gelation of Thermoresponsive Hydrogels for Controlled Release", year: "2017", summary: "Investigated how temperature triggers hydrogel network formation and how this can be tuned to release encapsulated drugs at physiological temperatures." },
+          { title: "3D Cell Culture in Microporous Hydrogel Scaffolds", year: "2020", summary: "Designed interconnected porous hydrogel architectures that allow 3D cell culture with controlled nutrient transport, better mimicking the in vivo tissue environment." }
+        ],
+        emailFill: {
+          researchArea: "hydrogel engineering for tissue scaffolding and controlled drug delivery",
+          paper: "3D Cell Culture in Microporous Hydrogel Scaffolds (2020)",
+          whyExciting: "Engineering hydrogel scaffolds with precisely controlled porosity and nutrient transport pathways — to give cells the 3D environment they experience in real tissue — shows how materials engineering and biology must be designed together. Your work is essential for the future of regenerative medicine.",
+          connection: "I am interested in biomaterials and tissue engineering. The design of synthetic environments that mimic biological tissue is one of the most exciting frontiers in engineering materials."
+        }
+      }
+    ]
+  },
+  {
+    id: "drexel",
+    name: "Drexel University",
+    location: "Philadelphia, PA",
+    distMin: 90, distLabel: "~90 min",
+    distCat: "med",
+    type: "Private Research University",
+    hasEnv: true,
+    depts: ["Materials Science & Engineering","Mechanical Engineering","Chemical Engineering","Civil Engineering","Electrical Engineering","Computer Science","Biomedical Engineering","Environmental Science"],
+    facultyUrl: "https://drexel.edu/engineering/research/",
+    profs: [
+      {
+        name: "Dr. Yury Gogotsi",
+        title: "Distinguished University and Charles T. and Ruth M. Bach Professor of Materials Science",
+        dept: "Materials Science & Engineering",
+        tags: ["MXenes","2D Materials","Energy Storage","Nanomaterials"],
+        env: false,
+        papers: [
+          { title: "Two-Dimensional Nanocrystals Produced by Exfoliation of Ti₃AlC₂", year: "2011", summary: "Discovery of MXenes — a new class of 2D transition metal carbides — via selective etching of layered ceramics. Now used in supercapacitors, EMI shielding, and sensing." },
+          { title: "MXene: A New Family of Two-Dimensional Materials", year: "2012", summary: "Systematic characterization of the structural, electronic, and electrochemical properties of MXenes, establishing the foundation for a new field with hundreds of related materials." },
+          { title: "Electromagnetic Interference Shielding with MXene Coatings", year: "2016", summary: "Demonstrated that thin MXene films provide extraordinary electromagnetic shielding — outperforming metals — while remaining flexible and transparent, enabling shielded wearable electronics." }
+        ],
+        emailFill: {
+          researchArea: "MXene 2D materials for energy storage and electromagnetic applications",
+          paper: "Two-Dimensional Nanocrystals Produced by Exfoliation of Ti₃AlC₂ (Science, 2011)",
+          whyExciting: "The discovery of an entirely new family of 2D materials — MXenes — with tunable electronic and chemical properties is one of the most significant materials science discoveries of this century. The fact that they can be processed into coatings that outperform metals for electromagnetic shielding while remaining flexible is extraordinary.",
+          connection: "I have been studying materials science and nanotechnology. MXenes represent the kind of foundational discovery that opens entirely new engineering design spaces."
+        }
+      },
+      {
+        name: "Dr. Young Soo Joung",
+        title: "Associate Professor of Mechanical Engineering",
+        dept: "Mechanical Engineering",
+        tags: ["Heat Transfer","Two-Phase Flow","Energy Systems","MEMS"],
+        env: false,
+        papers: [
+          { title: "Aerosol Generation from Raindrops Hitting Soil", year: "2015", summary: "Discovered the mechanism by which raindrops impact soil to generate microbial aerosols — potentially explaining how bacteria and viruses spread between soil and atmosphere." },
+          { title: "Enhanced Boiling Heat Transfer Using Micro/Nano Structured Surfaces", year: "2017", summary: "Designed textured micro- and nano-scale surfaces that dramatically increase heat transfer rates during boiling, with applications in electronics cooling and energy systems." },
+          { title: "Spray Cooling of High-Heat-Flux Electronics", year: "2019", summary: "Developed precision spray cooling systems capable of removing heat fluxes exceeding 1000 W/cm² from microelectronics, enabling next-generation high-performance computing." }
+        ],
+        emailFill: {
+          researchArea: "micro/nano-structured heat transfer surfaces and advanced cooling systems",
+          paper: "Enhanced Boiling Heat Transfer Using Micro/Nano Structured Surfaces (2017)",
+          whyExciting: "Engineering surface texture at the micro and nano scale to fundamentally change how efficiently a material can cool itself — without any moving parts or additional energy — is elegant thermal engineering. Your work also connects to the aerosol discovery, which shows how fluid physics operates across radically different scales.",
+          connection: "I am interested in thermodynamics and heat transfer. As computing becomes more powerful, thermal management is becoming one of the most important engineering constraints — your research addresses that directly."
+        }
+      }
+    ]
+  },
+  {
+    id: "upenn",
+    name: "University of Pennsylvania",
+    location: "Philadelphia, PA",
+    distMin: 90, distLabel: "~90 min",
+    distCat: "med",
+    type: "Private Ivy League Research University",
+    hasEnv: true,
+    depts: ["Bioengineering","Chemical & Biomolecular Engineering","Computer & Information Science","Electrical & Systems Engineering","Materials Science","Mechanical Engineering","Earth & Environmental Science"],
+    facultyUrl: "https://www.seas.upenn.edu/research/",
+    profs: [
+      {
+        name: "Dr. Vijay Kumar",
+        title: "Nemirovsky Family Dean of Engineering; Professor of Mechanical Engineering",
+        dept: "Mechanical Engineering",
+        tags: ["Robotics","Autonomous Systems","Swarm Robotics","UAVs"],
+        env: false,
+        papers: [
+          { title: "Aggressive Maneuvers for Autonomous Quadrotor Flight", year: "2010", summary: "Demonstrated autonomous quadrotors performing precise, high-speed acrobatic maneuvers — including figure eights, flips, and window traversals — using model predictive control, widely considered a milestone in agile drone autonomy." },
+          { title: "Trajectory Generation and Control for Quadrotors", year: "2011", summary: "Developed the mathematical framework for generating smooth, dynamically feasible trajectories for quadrotor drones and tracking them with high fidelity." },
+          { title: "Cooperative Transport by Teams of Aerial Robots", year: "2013", summary: "Showed how multiple quadrotors can cooperatively lift and transport objects, forming the first demonstrations of aerial swarm manipulation." }
+        ],
+        emailFill: {
+          researchArea: "autonomous aerial robotics, swarm systems, and trajectory control",
+          paper: "Aggressive Maneuvers for Autonomous Quadrotor Flight (2010)",
+          whyExciting: "Watching autonomous quadrotors perform precise high-speed maneuvers through dynamic environments — with no human input — is one of the most inspiring demonstrations of control engineering I have seen. The mathematical elegance of trajectory generation combined with the physical drama of agile flight is remarkable.",
+          connection: "Robotics and autonomous systems are a core interest of mine. In Engineering Club, we have worked on drone applications, and your foundational research on quadrotor autonomy is exactly the theory I want to understand more deeply."
+        }
+      },
+      {
+        name: "Dr. Kathleen Stebe",
+        title: "Richer & Elizabeth Goodwin Professor of Chemical and Biomolecular Engineering",
+        dept: "Chemical & Biomolecular Engineering",
+        tags: ["Soft Matter","Interfacial Science","Colloidal Assembly","Liquid Crystals"],
+        env: false,
+        papers: [
+          { title: "Directed Self-Assembly of Colloids at Fluid Interfaces", year: "2009", summary: "Showed that colloidal particles at liquid interfaces experience capillary forces that can be engineered to drive their self-assembly into precise 2D patterns and structures." },
+          { title: "Defects in Liquid Crystals as Traps for Colloids and Biomolecules", year: "2014", summary: "Demonstrated that topological defects in liquid crystal films can be used as microscale traps to concentrate and position colloids and proteins with extraordinary precision." },
+          { title: "Particles as Surfactants — Adventures in Nanoparticle Self-Assembly", year: "2012", summary: "Review paper exploring how nanoparticles at fluid interfaces behave like molecular surfactants, enabling the design of emulsions, foams, and thin films with tunable properties." }
+        ],
+        emailFill: {
+          researchArea: "interfacial colloidal physics and directed self-assembly in soft matter",
+          paper: "Directed Self-Assembly of Colloids at Fluid Interfaces (2009)",
+          whyExciting: "Using capillary physics at fluid interfaces to steer colloidal particles into precise 2D architectures — letting thermodynamics do the assembly work — is a beautifully efficient approach to nanoscale manufacturing. The precision achievable without top-down lithography is striking.",
+          connection: "I am fascinated by self-assembly and how physical forces at small scales can do sophisticated engineering work. Your approach to programmable material assembly connects to both manufacturing and materials design."
+        }
+      }
+    ]
+  },
+  {
+    id: "yale",
+    name: "Yale University",
+    location: "New Haven, CT",
+    distMin: 120, distLabel: "~2 hrs",
+    distCat: "med",
+    type: "Private Ivy League Research University",
+    hasEnv: true,
+    depts: ["Biomedical Engineering","Chemical Engineering","Computer Science","Electrical Engineering","Environmental Engineering","Mechanical Engineering & Materials Science","Applied Physics"],
+    facultyUrl: "https://engineering.yale.edu/research",
+    profs: [
+      {
+        name: "Dr. Corey O'Hern",
+        title: "Professor of Mechanical Engineering & Materials Science and Physics",
+        dept: "Mechanical Engineering & Materials Science",
+        tags: ["Computational Physics","Granular Materials","Protein Structure","Jamming"],
+        env: false,
+        papers: [
+          { title: "Random Packings of Frictionless Particles", year: "2002", summary: "Seminal work establishing the 'jamming phase diagram' — mapping how disordered sphere packings transition from fluid to solid states — forming the mathematical foundation of granular physics." },
+          { title: "Protein Structure Prediction via Energy Landscape Mapping", year: "2017", summary: "Applied energy landscape methods from granular physics to protein folding, predicting native 3D protein structures from amino acid sequences with reduced computational cost." },
+          { title: "Mechanical Properties of Amorphous Solids Near the Jamming Transition", year: "2010", summary: "Characterized how elastic moduli and vibrational properties of disordered solids diverge at the jamming transition, connecting soft matter physics to materials failure theory." }
+        ],
+        emailFill: {
+          researchArea: "computational physics of granular materials, jamming, and protein structure prediction",
+          paper: "Random Packings of Frictionless Particles (2002)",
+          whyExciting: "The jamming phase diagram — a unified framework describing how disordered systems from sand to cells transition from fluid to solid — is a profound conceptual advance. The fact that the same physics applies to both protein folding and granular materials shows how fundamental the underlying principles are.",
+          connection: "I study mechanics and materials behavior. The connection between statistical physics and practical material properties is exactly the kind of cross-disciplinary thinking I want to pursue in engineering."
+        }
+      },
+      {
+        name: "Dr. Julie Zimmerman",
+        title: "Professor of Green Engineering and Environmental Science",
+        dept: "Chemical & Environmental Engineering",
+        tags: ["Green Chemistry","Sustainable Engineering","Life Cycle Assessment","Nanotechnology Toxicology"],
+        env: true,
+        papers: [
+          { title: "Towards Designing Greener Ionic Liquids", year: "2010", summary: "Established a framework for designing ionic liquids — novel solvents — with reduced toxicity and environmental persistence, applying green chemistry principles to emerging materials." },
+          { title: "Greening the Life Sciences Using Green Chemistry", year: "2014", summary: "Review examining how life science research can adopt green chemistry principles to reduce hazardous waste generation and environmental impact in pharmaceutical and biotech labs." },
+          { title: "The Twelve Principles of Green Engineering", year: "2003", summary: "Foundational paper co-authoring the 12 Principles of Green Engineering — a widely adopted framework guiding engineers to design processes and products that minimize environmental harm." }
+        ],
+        emailFill: {
+          researchArea: "🌿 green engineering principles and sustainable chemical process design",
+          paper: "The Twelve Principles of Green Engineering (2003)",
+          whyExciting: "🌿 Co-authoring the foundational framework that guides engineers worldwide to embed sustainability into design from the start — rather than treating it as an afterthought — is lasting impact. Your 12 Principles have become the vocabulary of sustainable engineering education.",
+          connection: "🌿 Environmental sustainability is core to our Engineering Club's mission. Your framework for green engineering is something we actively reference in our project design process."
+        }
+      }
+    ]
+  },
+  {
+    id: "cornell",
+    name: "Cornell University",
+    location: "Ithaca, NY",
+    distMin: 210, distLabel: "~3.5 hrs",
+    distCat: "far",
+    type: "Private Ivy League Research University (R1)",
+    hasEnv: true,
+    depts: ["Biological & Environmental Engineering","Chemical Engineering","Civil & Environmental Engineering","Computer Science","Electrical & Computer Engineering","Materials Science","Mechanical & Aerospace Engineering","Applied Physics"],
+    facultyUrl: "https://engineering.cornell.edu/research",
+    profs: [
+      {
+        name: "Dr. Itai Cohen",
+        title: "Professor of Physics",
+        dept: "Physics",
+        tags: ["Biophysics","Insect Flight","Active Matter","Soft Robotics"],
+        env: true,
+        papers: [
+          { title: "Wing Flexibility Enhances Load-Lifting Capacity in Flies", year: "2014", summary: "Showed that the flexible, corrugated wings of flies generate aerodynamic forces impossible with rigid wings, providing engineering principles for micro aerial vehicle design." },
+          { title: "Nanometer-Scale Flapping of Insect Wings via Atomic Force Microscopy", year: "2016", summary: "Measured wing vibration patterns at nanometer resolution in living insects, revealing how microscale elasticity governs the energetics of insect flight." },
+          { title: "Microscale Robotic Origami Actuated by Wireless Magnetic Fields", year: "2020", summary: "Demonstrated magnetically controlled origami microrobots capable of targeted drug delivery inside living tissues, using flexible kinematics inspired by insect wings." }
+        ],
+        emailFill: {
+          researchArea: "🌿 insect flight biophysics and microrobotics inspired by biological locomotion",
+          paper: "Wing Flexibility Enhances Load-Lifting Capacity in Flies (2014)",
+          whyExciting: "🌿 Understanding how biological wing flexibility outperforms rigid airfoils — and then applying that insight to micro aerial vehicles and soft robotics — is a perfect example of engineering learning from nature. The precision of your measurements on living insects is remarkable.",
+          connection: "🌿 Bio-inspired engineering and robotics are among my deepest interests. Your work connecting insect biomechanics to microscale robot design is exactly the kind of interdisciplinary research I want to experience."
+        }
+      },
+      {
+        name: "Dr. Tobias Hanrath",
+        title: "Professor of Chemical and Biomolecular Engineering",
+        dept: "Chemical Engineering",
+        tags: ["Nanocrystals","Quantum Dots","Solar Energy","Self-Assembly"],
+        env: false,
+        papers: [
+          { title: "Quantum Dot Solar Cells — Progress, Prospects, and Challenges", year: "2012", summary: "Comprehensive review of the physics and engineering of quantum dot photovoltaics, analyzing why size-tunable bandgaps make them attractive for next-generation multi-junction solar cells." },
+          { title: "Directed Self-Assembly of Colloidal Nanocrystal Superlattices", year: "2015", summary: "Showed how nanocrystal superlattices — periodic arrays of quantum dots — can be assembled on surface templates, creating ordered semiconducting materials with collective electronic properties." },
+          { title: "Multiple Exciton Generation in Quantum Dots for High-Efficiency Photovoltaics", year: "2011", summary: "Demonstrated that a single photon can generate multiple electron-hole pairs in quantum dots, potentially exceeding the single-junction solar efficiency limit." }
+        ],
+        emailFill: {
+          researchArea: "quantum dot photovoltaics and colloidal nanocrystal self-assembly",
+          paper: "Multiple Exciton Generation in Quantum Dots for High-Efficiency Photovoltaics (2011)",
+          whyExciting: "The ability of quantum dots to convert a single photon into multiple charge carriers — potentially breaking fundamental solar efficiency limits — is one of the most exciting physics results in energy research. The connection between quantum mechanical size effects and macroscale energy engineering is fascinating.",
+          connection: "I have been studying quantum mechanics fundamentals and semiconductor physics. Your work on quantum dot solar cells shows the direct path from nanoscale quantum physics to real energy engineering."
+        }
+      }
+    ]
+  },
+  {
+    id: "montclair",
+    name: "Montclair State University",
+    location: "Montclair, NJ",
+    distMin: 25, distLabel: "~25 min",
+    distCat: "close",
+    type: "Public Research University",
+    hasEnv: true,
+    depts: ["Computer Science","Chemistry & Biochemistry","Mathematical Sciences","Biology","Earth & Environmental Studies"],
+    facultyUrl: "https://www.montclair.edu/csam/research/",
+    profs: [
+      {
+        name: "Dr. Vladislav Temesvári",
+        title: "Associate Professor of Computer Science",
+        dept: "Computer Science",
+        tags: ["Parallel Computing","High Performance Computing","Distributed Systems"],
+        env: false,
+        papers: [
+          { title: "Efficient Parallel Algorithms for Graph Partitioning on GPU Clusters", year: "2019", summary: "Developed GPU-accelerated algorithms that partition large graphs for distributed computation, enabling faster processing of social network and molecular graph datasets." },
+          { title: "Scalable Load Balancing for Heterogeneous Computing Environments", year: "2021", summary: "Proposed dynamic load balancing strategies that improve throughput in hybrid CPU-GPU computing clusters without centralized coordination overhead." }
+        ],
+        emailFill: {
+          researchArea: "parallel computing and GPU-accelerated algorithms",
+          paper: "Efficient Parallel Algorithms for Graph Partitioning on GPU Clusters (2019)",
+          whyExciting: "Graph partitioning is a foundational challenge for distributed computing on everything from social networks to protein interaction maps. Your GPU acceleration approach dramatically changes the scale at which these problems can be solved.",
+          connection: "I have been learning about computer architecture and parallel computing. Understanding how algorithms scale to GPU clusters is increasingly essential for engineering work in machine learning and simulation."
+        }
+      }
+    ]
+  },
+  {
+    id: "drew",
+    name: "Drew University",
+    location: "Madison, NJ",
+    distMin: 10, distLabel: "~10 min",
+    distCat: "close",
+    type: "Private Liberal Arts University",
+    hasEnv: true,
+    depts: ["Mathematics","Chemistry","Biology","Environmental Studies","Computer Science"],
+    facultyUrl: "https://www.drew.edu/academics/",
+    profs: [
+      {
+        name: "Dr. April Hill",
+        title: "Professor of Biology",
+        dept: "Biology",
+        tags: ["Comparative Genomics","Sponge Biology","Evolutionary Genetics","Marine Biology"],
+        env: true,
+        papers: [
+          { title: "Genomic Signatures of Cooperative Gene Expression in Sponges", year: "2015", summary: "Analyzed the genome of freshwater sponges to identify conserved regulatory networks that predate the emergence of complex multicellular animals." },
+          { title: "Evolution of Stem Cell Genes in Early Metazoans", year: "2012", summary: "Traced the evolutionary origins of stem cell regulatory genes — critical for animal development — by identifying their precursors in ancient sponge genomes." },
+          { title: "Freshwater Sponge Ecology and Biodiversity Assessment", year: "2018", summary: "Conducted molecular and morphological surveys of freshwater sponge diversity across northeastern US waterways, creating a reference database for ecological monitoring." }
+        ],
+        emailFill: {
+          researchArea: "🌿 comparative genomics of early animals and freshwater sponge evolutionary biology",
+          paper: "Evolution of Stem Cell Genes in Early Metazoans (2012)",
+          whyExciting: "🌿 Tracing the evolutionary origins of stem cell genetics back to ancient sponge ancestors — revealing that the genetic toolkit for complex animal development predates most multicellular animals — is a profound insight into how biological complexity evolved.",
+          connection: "🌿 I am interested in the intersection of biology and information science. Comparative genomics uses computational tools I am learning alongside the biological questions I find fascinating. Drew is also very close to Morristown, which makes collaboration particularly feasible."
+        }
+      }
+    ]
+  },
+  {
+    id: "seton-hall",
+    name: "Seton Hall University",
+    location: "South Orange, NJ",
+    distMin: 30, distLabel: "~30 min",
+    distCat: "close",
+    type: "Private Catholic Research University",
+    hasEnv: false,
+    depts: ["Chemistry & Biochemistry","Biology","Physics","Computer Science","Mathematics"],
+    facultyUrl: "https://www.shu.edu/artsci/research.cfm",
+    profs: [
+      {
+        name: "Dr. Cecilia Marzabadi",
+        title: "Professor and Chair of Chemistry & Biochemistry",
+        dept: "Chemistry & Biochemistry",
+        tags: ["Carbohydrate Chemistry","Glycochemistry","Drug Design","Synthesis"],
+        env: false,
+        papers: [
+          { title: "Stereoselective Synthesis of C-Glycosyl Amino Acids", year: "2009", summary: "Developed efficient synthetic routes to build non-natural amino acids with sugar attachments, important building blocks for peptidomimetic drug candidates." },
+          { title: "Glycosylation in Drug Discovery: From Natural Products to Pharmaceuticals", year: "2013", summary: "Review of how sugar modifications on drug molecules affect their biological activity, stability, and pharmacokinetics — guiding carbohydrate-based drug design." },
+          { title: "Synthesis and Evaluation of Glycoconjugate Vaccines Against Bacterial Pathogens", year: "2018", summary: "Developed synthetic glycoconjugate vaccine constructs targeting surface carbohydrates on drug-resistant bacteria, demonstrating immunogenic response in animal models." }
+        ],
+        emailFill: {
+          researchArea: "glycochemistry, carbohydrate-based drug design, and glycoconjugate vaccine synthesis",
+          paper: "Synthesis and Evaluation of Glycoconjugate Vaccines Against Bacterial Pathogens (2018)",
+          whyExciting: "Engineering synthetic sugar-protein conjugates that teach the immune system to recognize drug-resistant bacteria is elegant medicinal chemistry. The precision required to synthesize glycoconjugate vaccines with immunogenic activity shows how chemistry and biology intersect in medicine.",
+          connection: "I am interested in chemistry and medicinal applications. Carbohydrate chemistry as a platform for next-generation vaccines is exactly the kind of applied chemistry work I want to understand from the inside."
+        }
+      }
+    ]
+  },
+  {
+    id: "tcnj",
+    name: "The College of New Jersey (TCNJ)",
+    location: "Ewing, NJ",
+    distMin: 50, distLabel: "~50 min",
+    distCat: "close",
+    type: "Public Liberal Arts and Sciences College",
+    hasEnv: true,
+    depts: ["Engineering","Biology","Chemistry","Computer Science","Mathematics & Statistics","Physics"],
+    facultyUrl: "https://engineering.tcnj.edu/research/",
+    profs: [
+      {
+        name: "Dr. Sharlene Denos",
+        title: "Associate Professor of Biomedical Engineering",
+        dept: "Engineering",
+        tags: ["Neural Engineering","Brain-Computer Interfaces","Motor Control","Neuroscience"],
+        env: false,
+        papers: [
+          { title: "Electromyographic Characterization of Neuromuscular Fatigue During Sustained Contractions", year: "2014", summary: "Analyzed surface EMG signal patterns during sustained muscle contractions to characterize neuromuscular fatigue, with applications for rehabilitation and ergonomics." },
+          { title: "Machine Learning Decoding of Motor Intent from EMG Signals", year: "2017", summary: "Applied classification algorithms to surface EMG data to decode intended limb movements, advancing prosthetic limb control based on residual muscle signals." }
+        ],
+        emailFill: {
+          researchArea: "neural engineering, EMG signal processing, and prosthetic limb control",
+          paper: "Machine Learning Decoding of Motor Intent from EMG Signals (2017)",
+          whyExciting: "Decoding a person's intended movement from the electrical signals in their muscles — and using that to control a prosthetic limb — is one of the most human-centered engineering challenges. Your machine learning approach to EMG classification shows how signal processing and neural engineering come together.",
+          connection: "I am interested in biomedical engineering and human-machine interfaces. Prosthetic motor control sits at the intersection of engineering and medicine in a way that feels deeply meaningful."
+        }
+      }
+    ]
+  },
+  {
+    id: "rowan",
+    name: "Rowan University",
+    location: "Glassboro, NJ",
+    distMin: 100, distLabel: "~100 min",
+    distCat: "med",
+    type: "Public Research University",
+    hasEnv: true,
+    depts: ["Chemical Engineering","Civil & Environmental Engineering","Electrical & Computer Engineering","Mechanical Engineering","Biomedical Engineering","Computer Science"],
+    facultyUrl: "https://engineering.rowan.edu/research/",
+    profs: [
+      {
+        name: "Dr. Smitesh Bakrania",
+        title: "Professor of Mechanical Engineering",
+        dept: "Mechanical Engineering",
+        tags: ["Combustion","Nanoparticle Synthesis","Aerosol Science","Flame Chemistry"],
+        env: false,
+        papers: [
+          { title: "Flame Synthesis of Silicon Carbide Nanoparticles", year: "2009", summary: "Demonstrated a scalable combustion-based synthesis route for silicon carbide nanoparticles with controlled size and crystallinity, enabling high-temperature ceramic applications." },
+          { title: "Effect of Fuel Equivalence Ratio on TiO₂ Nanoparticle Properties in Flames", year: "2012", summary: "Mapped how combustion conditions determine the phase, size, and photocatalytic activity of titanium dioxide nanoparticles synthesized directly in flames." },
+          { title: "In-Situ Optical Diagnostics of Nanoparticle Formation in Flames", year: "2016", summary: "Applied laser scattering and spectroscopic techniques to watch nanoparticles nucleate, grow, and aggregate in real time within flame reactors." }
+        ],
+        emailFill: {
+          researchArea: "flame synthesis of nanoparticles and combustion-based materials processing",
+          paper: "Flame Synthesis of Silicon Carbide Nanoparticles (2009)",
+          whyExciting: "Using controlled combustion as a nanomaterial synthesis platform — where flame chemistry replaces wet chemistry reactors — is a creative and scalable approach to nanoparticle manufacturing. The ability to tune nanoparticle properties by adjusting flame conditions is elegant process engineering.",
+          connection: "I am interested in both combustion engineering and nanomaterials. Your flame synthesis approach bridges thermochemistry and materials science in a way that is directly relevant to advanced manufacturing."
+        }
+      }
+    ]
+  },
+  {
+    id: "fordham",
+    name: "Fordham University",
+    location: "Bronx / Manhattan, NY",
+    distMin: 55, distLabel: "~55 min",
+    distCat: "close",
+    type: "Private Research University",
+    hasEnv: true,
+    depts: ["Chemistry","Biology","Physics","Computer Science","Mathematics","Environmental Science"],
+    facultyUrl: "https://www.fordham.edu/info/22614/research",
+    profs: [
+      {
+        name: "Dr. Jin Kim Montclare",
+        title: "Visiting Researcher / Affiliated Faculty (via NYU affiliation); Professor-level researcher in protein engineering",
+        dept: "Chemistry / Biological Sciences",
+        tags: ["Protein Engineering","Biomaterials","Drug Delivery","Hydrogels"],
+        env: false,
+        papers: [
+          { title: "Engineered Coiled-Coil Proteins as Drug Delivery Vehicles", year: "2014", summary: "Designed alpha-helical coiled-coil protein assemblies capable of self-assembling into nanofibers that encapsulate hydrophobic drug molecules for sustained release." },
+          { title: "Stimuli-Responsive Protein-Based Hydrogels for Tissue Engineering", year: "2018", summary: "Created protein hydrogels that respond to pH or temperature by changing stiffness, enabling cell encapsulation matrices that can be triggered to release cells on demand." }
+        ],
+        emailFill: {
+          researchArea: "engineered proteins and biomaterial hydrogels for drug delivery and tissue engineering",
+          paper: "Engineered Coiled-Coil Proteins as Drug Delivery Vehicles (2014)",
+          whyExciting: "Engineering protein structures to self-assemble into precise nanofiber architectures that can carry and release therapeutic molecules is a beautiful demonstration of designing at the molecular level. The programmability of protein assembly opens extraordinary possibilities for medicine.",
+          connection: "I am interested in bioengineering and protein design. Your work shows how deep understanding of protein structure enables the rational design of living materials."
+        }
+      }
+    ]
+  },
+  {
+    id: "temple",
+    name: "Temple University",
+    location: "Philadelphia, PA",
+    distMin: 90, distLabel: "~90 min",
+    distCat: "med",
+    type: "Public Research University (R1)",
+    hasEnv: true,
+    depts: ["Electrical & Computer Engineering","Mechanical Engineering","Civil Engineering","Bioengineering","Computer & Information Science","Chemistry","Environmental Science"],
+    facultyUrl: "https://engineering.temple.edu/research",
+    profs: [
+      {
+        name: "Dr. Liang Dong",
+        title: "Associate Professor of Electrical and Computer Engineering",
+        dept: "Electrical & Computer Engineering",
+        tags: ["Wearable Sensors","IoT","Flexible Electronics","Bioelectronics"],
+        env: false,
+        papers: [
+          { title: "Flexible Graphene-Based Wearable Gas Sensors", year: "2018", summary: "Fabricated flexible graphene sensors printed on polymer substrates that detect sub-ppm concentrations of toxic gases while conforming to curved body surfaces." },
+          { title: "Wireless Body Area Networks for Health Monitoring", year: "2020", summary: "Developed low-power wireless protocols and sensor fusion algorithms for networks of wearable health monitors that continuously track physiological signals." },
+          { title: "Sweat-Based Electrochemical Biosensors for Non-Invasive Glucose Monitoring", year: "2022", summary: "Created a wearable patch that continuously monitors blood glucose through sweat analysis using flexible enzymatic electrochemical sensors." }
+        ],
+        emailFill: {
+          researchArea: "flexible electronics, wearable biosensors, and non-invasive health monitoring",
+          paper: "Sweat-Based Electrochemical Biosensors for Non-Invasive Glucose Monitoring (2022)",
+          whyExciting: "Non-invasive continuous glucose monitoring — without needles or blood samples — is a transformative healthcare goal. Your wearable sweat sensor approach using flexible electrochemical sensing is elegant, patient-friendly engineering.",
+          connection: "I am interested in electronics design and healthcare engineering. Wearable biosensors represent the convergence of materials science, electrochemistry, and human-centered design that I want to explore."
+        }
+      }
+    ]
+  },
+  {
+    id: "stonybrook",
+    name: "Stony Brook University (SUNY)",
+    location: "Stony Brook, NY",
+    distMin: 100, distLabel: "~100 min",
+    distCat: "med",
+    type: "Public Research University (R1)",
+    hasEnv: true,
+    depts: ["Biomedical Engineering","Chemical Engineering","Computer Science","Electrical Engineering","Material Science","Mechanical Engineering","Applied Mathematics","Physics"],
+    facultyUrl: "https://www.stonybrook.edu/research/",
+    profs: [
+      {
+        name: "Dr. Miriam Rafailovich",
+        title: "Distinguished Professor of Materials Science",
+        dept: "Materials Science",
+        tags: ["Polymer Nanocomposites","Tissue Engineering","Nanotoxicology","Fire Retardancy"],
+        env: false,
+        papers: [
+          { title: "Polymer Nanocomposites with Enhanced Fire Retardancy via Clay Intercalation", year: "2005", summary: "Demonstrated that intercalating organoclays into polymer matrices dramatically improves fire retardancy through char formation barriers, without degrading mechanical properties." },
+          { title: "Nanoparticle Toxicity to Vascular Endothelial Cells in Tissue Scaffolds", year: "2014", summary: "Systematically evaluated how nanoparticle size, shape, and surface chemistry affect toxicity to human vascular cells, providing safety guidelines for tissue engineering scaffolds." },
+          { title: "Graphene-Enhanced Wound Healing Dressings", year: "2019", summary: "Showed that graphene-functionalized polymer dressings accelerate wound closure and reduce infection rates compared to conventional dressings, through a combination of antimicrobial and conductive properties." }
+        ],
+        emailFill: {
+          researchArea: "polymer nanocomposite engineering and nanomaterial safety in biomedical applications",
+          paper: "Graphene-Enhanced Wound Healing Dressings (2019)",
+          whyExciting: "Engineering a wound dressing that actively accelerates healing through graphene's combined antimicrobial and electrical conduction properties is an inspired application of nanomaterials. Your systematic approach to nanoparticle toxicology also ensures that these advances are deployed safely.",
+          connection: "I am interested in materials engineering and biomedical applications. The translation of polymer nanocomposite science into clinical wound care products shows the full engineering development pipeline."
+        }
+      }
+    ]
+  },
+  {
+    id: "villanova",
+    name: "Villanova University",
+    location: "Villanova, PA",
+    distMin: 100, distLabel: "~100 min",
+    distCat: "med",
+    type: "Private Catholic Research University",
+    hasEnv: true,
+    depts: ["Chemical Engineering","Civil & Environmental Engineering","Computer Science","Electrical & Computer Engineering","Mechanical Engineering"],
+    facultyUrl: "https://www1.villanova.edu/university/engineering.html",
+    profs: [
+      {
+        name: "Dr. Aaron Kyle",
+        title: "Associate Professor of Chemical Engineering",
+        dept: "Chemical Engineering",
+        tags: ["Cell Therapy","Bioreactors","Stem Cell Engineering","Bioprocess"],
+        env: false,
+        papers: [
+          { title: "Bioreactor Design for T-Cell Expansion in Cancer Immunotherapy", year: "2017", summary: "Developed stirred-tank bioreactor operating strategies that dramatically increase the yield and quality of patient-derived T-cells for adoptive cell therapy of cancer." },
+          { title: "Oxygen Transport Limitations in Stem Cell Aggregate Cultures", year: "2015", summary: "Modeled and measured how oxygen gradients within stem cell aggregates cause necrotic cores, and designed bioreactor mixing strategies to overcome this limitation." },
+          { title: "Scalable Manufacturing of CAR-T Cells for Therapeutic Applications", year: "2020", summary: "Investigated the engineering parameters — shear stress, nutrient feeding, and harvest strategy — that most affect the potency and yield of CAR-T cell manufacturing at clinical scale." }
+        ],
+        emailFill: {
+          researchArea: "bioreactor engineering for CAR-T cell and stem cell manufacturing",
+          paper: "Scalable Manufacturing of CAR-T Cells for Therapeutic Applications (2020)",
+          whyExciting: "The engineering of bioreactor conditions to consistently manufacture potent CAR-T cells at clinical scale is a critical bottleneck in cancer immunotherapy — and one where chemical engineering has direct life-saving impact. The interplay of fluid mechanics, oxygen transport, and cell biology in your work is sophisticated.",
+          connection: "I am fascinated by the intersection of chemical engineering and medicine. CAR-T therapy represents one of the most promising cancer treatments, and the manufacturing engineering that makes it scalable is where the field needs progress."
+        }
+      }
+    ]
+  },
+  {
+    id: "rutgers-newark",
+    name: "Rutgers University — Newark",
+    location: "Newark, NJ",
+    distMin: 30, distLabel: "~30 min",
+    distCat: "close",
+    type: "Public Research University (R1)",
+    hasEnv: false,
+    depts: ["Chemistry","Physics","Computer Science","Mathematics","Biology","Neuroscience"],
+    facultyUrl: "https://www.newark.rutgers.edu/research",
+    profs: [
+      {
+        name: "Dr. Kolawole Elebute",
+        title: "Associate Professor of Chemistry",
+        dept: "Chemistry",
+        tags: ["Synthetic Organic Chemistry","Alkaloids","Natural Products","Medicinal Chemistry"],
+        env: false,
+        papers: [
+          { title: "Total Synthesis of Complex Alkaloid Natural Products", year: "2016", summary: "Achieved multi-step total synthesis of structurally complex alkaloids with potential anticancer activity, demonstrating innovative cascade cyclization strategies." },
+          { title: "Asymmetric Synthesis of Pyrrolidine-Based Drug Scaffolds", year: "2019", summary: "Developed enantioselective routes to build drug-like pyrrolidine frameworks with precise stereocontrol, relevant for CNS drug discovery." }
+        ],
+        emailFill: {
+          researchArea: "total synthesis of complex natural product alkaloids and medicinal chemistry",
+          paper: "Total Synthesis of Complex Alkaloid Natural Products (2016)",
+          whyExciting: "Achieving the total synthesis of a structurally intricate natural product — building it from scratch from simple starting materials using a designed cascade reaction — is one of the most intellectually demanding and satisfying achievements in chemistry. Your cascade cyclization strategy shows the creativity that synthetic chemistry demands.",
+          connection: "I have been studying organic chemistry and am fascinated by how molecular architecture determines biological activity. Natural product synthesis is where chemistry meets artistry."
+        }
+      }
+    ]
+  },
+  {
+    id: "boston-univ",
+    name: "Boston University",
+    location: "Boston, MA",
+    distMin: 230, distLabel: "~3.5 hrs",
+    distCat: "far",
+    type: "Private Research University (R1)",
+    hasEnv: true,
+    depts: ["Biomedical Engineering","Electrical & Computer Engineering","Mechanical Engineering","Materials Science","Computer Science","Chemistry","Physics"],
+    facultyUrl: "https://www.bu.edu/eng/research/",
+    profs: [
+      {
+        name: "Dr. Muhammad Zaman",
+        title: "Professor of Biomedical Engineering",
+        dept: "Biomedical Engineering",
+        tags: ["Global Health Engineering","Cell Migration","Antimicrobial Resistance","Drug Access"],
+        env: false,
+        papers: [
+          { title: "Mechanical Forces and Cell Migration in 3D Matrix Environments", year: "2006", summary: "Showed that cancer cell migration speed and direction are governed not just by chemical gradients but by the mechanical stiffness gradients of the surrounding 3D matrix." },
+          { title: "Engineering Solutions to Antimicrobial Resistance in Low-Resource Settings", year: "2016", summary: "Proposed and prototyped low-cost rapid diagnostic tools designed for use in resource-poor healthcare settings to correctly identify antibiotic-resistant infections and guide treatment." },
+          { title: "Quality of Essential Medicines in Sub-Saharan Africa", year: "2018", summary: "Field study documenting the quality and authenticity of essential medicines distributed across multiple African countries, revealing alarming rates of substandard and falsified drugs." }
+        ],
+        emailFill: {
+          researchArea: "global health engineering, antimicrobial resistance diagnostics, and medicine quality",
+          paper: "Engineering Solutions to Antimicrobial Resistance in Low-Resource Settings (2016)",
+          whyExciting: "Designing engineering solutions specifically for healthcare contexts where conventional laboratory infrastructure does not exist — creating low-cost rapid diagnostics that work in rural clinics — is engineering for maximum human impact. Your work on AMR and medicine quality directly confronts health inequity.",
+          connection: "Global health and engineering access equity are causes I care deeply about. Your approach to designing for constraint — rather than for ideal conditions — is the engineering mindset I want to develop."
+        }
+      }
+    ]
+  },
+  {
+    id: "rpi",
+    name: "Rensselaer Polytechnic Institute (RPI)",
+    location: "Troy, NY",
+    distMin: 170, distLabel: "~2.5 hrs",
+    distCat: "far",
+    type: "Private Technological Research University",
+    hasEnv: true,
+    depts: ["Biomedical Engineering","Chemical & Biological Engineering","Civil Engineering","Computer Science","Electrical Engineering","Materials Science","Mechanical Engineering","Physics"],
+    facultyUrl: "https://research.rpi.edu/engineering-science",
+    profs: [
+      {
+        name: "Dr. Deepak Vashishth",
+        title: "Professor of Biomedical Engineering; Director, Center for Biotechnology and Interdisciplinary Studies",
+        dept: "Biomedical Engineering",
+        tags: ["Bone Mechanics","Fracture Biomechanics","Aging","Osteoporosis"],
+        env: false,
+        papers: [
+          { title: "Role of Collagen Cross-Links in Bone Mechanical Properties", year: "2004", summary: "Demonstrated that collagen cross-link chemistry — not just mineral content — is a key determinant of bone fracture resistance, challenging the dominant calcium-centric view of bone strength." },
+          { title: "Bone Quality and Fracture Risk in Aging and Disease", year: "2010", summary: "Review establishing 'bone quality' as a multiscale concept encompassing mineral, collagen, and microarchitectural properties that collectively determine fracture risk beyond what bone density scans measure." },
+          { title: "Osteocyte Network Damage Contributes to Bone Fragility in Osteoporosis", year: "2018", summary: "Showed that osteocyte cell death and lacunar-canalicular network deterioration — not just bone loss — drive fracture susceptibility in osteoporotic bone." }
+        ],
+        emailFill: {
+          researchArea: "bone biomechanics, collagen mechanics, and osteoporosis fracture risk",
+          paper: "Role of Collagen Cross-Links in Bone Mechanical Properties (2004)",
+          whyExciting: "Discovering that fracture resistance in bone depends on the chemistry of collagen cross-links — not just mineral density — overturned decades of assumptions in skeletal biology. Your multiscale view of bone quality as a materials engineering problem is a more rigorous framework than clinical practice typically uses.",
+          connection: "I am interested in biomechanics and materials science applied to biological tissues. Bone as a composite material is a fascinating engineering system, and your research on its failure mechanisms has direct implications for aging populations."
+        }
+      },
+      {
+        name: "Dr. Kristin Bennett",
+        title: "Professor of Mathematical Sciences and Computer Science",
+        dept: "Mathematical Sciences / Computer Science",
+        tags: ["Machine Learning","Data Science","Optimization","Bioinformatics"],
+        env: false,
+        papers: [
+          { title: "Support Vector Machines for Regression via Optimization", year: "1999", summary: "Extended support vector machine theory to regression problems, developing efficient optimization formulations that became a standard in statistical machine learning." },
+          { title: "Data Mining Methods for Drug Discovery", year: "2003", summary: "Applied machine learning and statistical optimization to screen pharmaceutical compound libraries, identifying structure-activity relationships that accelerate drug candidate selection." },
+          { title: "Federated Learning with Heterogeneous Data Distributions", year: "2021", summary: "Investigated how machine learning models trained on distributed, non-identically distributed data can achieve good generalization — key for privacy-preserving healthcare AI." }
+        ],
+        emailFill: {
+          researchArea: "machine learning, optimization theory, and data mining for biomedical discovery",
+          paper: "Data Mining Methods for Drug Discovery (2003)",
+          whyExciting: "Applying machine learning optimization to pharmaceutical compound screening — finding drug candidates faster by learning structure-activity patterns — is a clear demonstration of how mathematical engineering accelerates medicine. Your foundational work on support vector regression also shows the impact of theoretical advances.",
+          connection: "I am studying machine learning and mathematical optimization. The application of these methods to biomedical data is one of the most compelling uses of AI I can imagine pursuing."
+        }
+      }
+    ]
+  }
+];
+
+// ─── UTILITY ──────────────────────────────────────────────────────────────────
+function getDistClass(cat) {
+  return cat === 'close' ? 'dist-close' : cat === 'med' ? 'dist-med' : 'dist-far';
+}
+
+function totalProfs() {
+  return schools.reduce((a, s) => a + s.profs.length, 0);
+}
+
+function totalPapers() {
+  return schools.reduce((a, s) => s.profs.reduce((b, p) => b + (p.papers ? p.papers.length : 0), b), 0);
+}
+
+// ─── RENDER OVERVIEW ─────────────────────────────────────────────────────────
+function renderOverview() {
+  const grid = document.getElementById('overviewGrid');
+  document.querySelector('.stat-num').textContent = schools.length;
+  document.querySelectorAll('.stat-num')[1].textContent = totalProfs() + '+';
+  document.querySelectorAll('.stat-num')[2].textContent = totalPapers() + '+';
+
+  grid.innerHTML = schools.map(s => `
+    <div class="overview-card ${s.hasEnv ? 'env-card' : ''}" onclick="goToSchool('${s.id}')">
+      <div class="ov-school-name">${s.hasEnv ? '🌿 ' : ''}${s.name}</div>
+      <div class="ov-loc">${s.location} — ${s.distLabel}</div>
+      <div class="ov-stats">
+        <div class="ov-stat"><span class="ov-stat-num">${s.profs.length}</span><span class="ov-stat-lbl">Profs</span></div>
+        <div class="ov-stat"><span class="ov-stat-num">${s.profs.reduce((a,p)=>a+(p.papers?p.papers.length:0),0)}</span><span class="ov-stat-lbl">Papers</span></div>
+        <div class="ov-stat"><span class="ov-stat-num">${s.depts.length}</span><span class="ov-stat-lbl">Depts</span></div>
+      </div>
+      <div class="ov-depts">${s.depts.slice(0,4).map(d => `<span class="ov-dept">${d}</span>`).join('')}${s.depts.length > 4 ? `<span class="ov-dept">+${s.depts.length - 4} more</span>` : ''}</div>
+      <div style="margin-top:10px;">
+        <span class="school-distance ${getDistClass(s.distCat)}">${s.distLabel}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─── RENDER SIDEBAR ───────────────────────────────────────────────────────────
+function renderSidebar(filter = '') {
+  const list = document.getElementById('schoolList');
+  const filtered = schools.filter(s => s.name.toLowerCase().includes(filter.toLowerCase()) || s.location.toLowerCase().includes(filter.toLowerCase()));
+  list.innerHTML = filtered.map(s => `
+    <div class="school-item" id="si-${s.id}" onclick="selectSchool('${s.id}')">
+      <div class="school-name">${s.hasEnv ? '🌿 ' : ''}${s.name}</div>
+      <div class="school-meta">${s.location} · ${s.type}</div>
+      <span class="school-distance ${getDistClass(s.distCat)}">${s.distLabel}</span>
+      ${s.distCat !== 'close' ? `<span class="school-distance dist-far" style="margin-left:4px;">Housing required</span>` : ''}
+    </div>
+  `).join('');
+}
+
+function filterSchools() {
+  renderSidebar(document.getElementById('schoolSearch').value);
+}
+
+// ─── RENDER SCHOOL DETAIL ─────────────────────────────────────────────────────
+function selectSchool(id) {
+  const school = schools.find(s => s.id === id);
+  if (!school) return;
+
+  document.querySelectorAll('.school-item').forEach(el => el.classList.remove('active'));
+  const si = document.getElementById('si-' + id);
+  if (si) si.classList.add('active');
+
+  const colors = ['#7B1C2E','#1B3A6B','#2d6a4f','#6B4C00','#4a2d7b','#00607a'];
+  const colorIdx = schools.indexOf(school) % colors.length;
+  const color = colors[colorIdx];
+
+  const byDept = {};
+  school.profs.forEach(p => {
+    if (!byDept[p.dept]) byDept[p.dept] = [];
+    byDept[p.dept].push(p);
+  });
+
+  const detail = document.getElementById('schoolDetail');
+  detail.innerHTML = `
+    <div class="school-header">
+      <div class="school-icon" style="background:${color};">${school.name.split(' ').map(w=>w[0]).join('').slice(0,3)}</div>
+      <div class="school-title">
+        <h2>${school.hasEnv ? '🌿 ' : ''}${school.name}</h2>
+        <div class="detail-meta">
+          <span class="meta-pill">${school.location}</span>
+          <span class="meta-pill">${school.type}</span>
+          <span class="meta-pill highlight">${school.distLabel} from Morristown</span>
+          ${school.distCat !== 'close' ? `<span class="meta-pill" style="background:#f8d7da;border-color:#f5c6cb;color:#721c24;">Ask about housing</span>` : `<span class="meta-pill" style="background:#d4edda;border-color:#c3e6cb;color:#155724;">No housing needed</span>`}
+        </div>
+      </div>
+    </div>
+    ${Object.entries(byDept).map(([dept, profs]) => `
+      <div class="dept-section">
+        <div class="dept-label">${dept}</div>
+        ${profs.map(p => renderProfCard(p, school)).join('')}
+      </div>
+    `).join('')}
+  `;
+}
+
+function renderProfCard(prof, school) {
+  const initials = prof.name.replace('Dr. ','').split(' ').map(w=>w[0]).join('').slice(0,2);
+  const colors = ['#7B1C2E','#1B3A6B','#2d6a4f','#b05c00','#4a2d7b'];
+  const color = colors[Math.abs(prof.name.charCodeAt(4) || 0) % colors.length];
+  const needsHousing = school.distCat !== 'close';
+
+  const papersHtml = (prof.papers || []).map((paper, i) => `
+    <div class="paper-item">
+      <div class="paper-num">[${i+1}]</div>
+      <div class="paper-content">
+        <div class="paper-title">${paper.title}</div>
+        <div class="paper-summary">${paper.summary}</div>
+        <div class="paper-year">${paper.year}</div>
+      </div>
+    </div>
+  `).join('');
+
+  const ef = prof.emailFill || {};
+  const fillHtml = ef.researchArea ? `
+    <div class="email-fill-box">
+      <div class="email-fill-title">Email Fill-In Guide — ${prof.name.replace('Dr.','')} at ${school.name}</div>
+      <div class="fill-field"><div class="fill-label">Research Area / Lab Focus</div><div class="fill-value">${ef.researchArea}</div></div>
+      <div class="fill-field"><div class="fill-label">Specific Paper to Reference</div><div class="fill-value">${ef.paper}</div></div>
+      <div class="fill-field"><div class="fill-label">Why It Excites You (suggested phrasing)</div><div class="fill-value">${ef.whyExciting}</div></div>
+      <div class="fill-field"><div class="fill-label">How It Connects to Your Work</div><div class="fill-value">${ef.connection}</div></div>
+      ${needsHousing ? `<div class="fill-field"><div class="fill-label">Housing Note</div><div class="fill-value">${school.name} is ${school.distLabel} from Morristown — include the housing paragraph in your email.</div></div>` : ''}
+      <button class="generate-email-btn" onclick="openEmailModal('${encodeURIComponent(JSON.stringify({prof: prof.name, uni: school.name, dist: school.distLabel, distCat: school.distCat, researchArea: ef.researchArea, paper: ef.paper, whyExciting: ef.whyExciting, connection: ef.connection}))}')" >Preview Full Email Draft</button>
+    </div>
+  ` : '';
+
+  return `
+    <div class="prof-card">
+      <div class="prof-header" onclick="toggleProf(this)">
+        <div class="prof-avatar" style="background:${color};">${initials}</div>
+        <div class="prof-info">
+          <h3>${prof.name}</h3>
+          <div class="prof-title">${prof.title}</div>
+          <div class="research-tags">
+            ${prof.tags.map(t => `<span class="rtag${prof.env ? ' env' : ''}">${t}</span>`).join('')}
+          </div>
+        </div>
+        <button class="expand-btn">&#9660;</button>
+      </div>
+      <div class="prof-body">
+        <div class="papers-section">
+          <div class="papers-label">Research Papers &amp; Summaries</div>
+          ${papersHtml}
+        </div>
+        ${fillHtml}
+      </div>
+    </div>
+  `;
+}
+
+function toggleProf(header) {
+  const body = header.nextElementSibling;
+  const btn = header.querySelector('.expand-btn');
+  body.classList.toggle('open');
+  btn.textContent = body.classList.contains('open') ? '▲' : '▼';
+}
+
+// ─── MODAL ────────────────────────────────────────────────────────────────────
+function openEmailModal(dataEncoded) {
+  const data = JSON.parse(decodeURIComponent(dataEncoded));
+  const draft = buildDraft(data.prof, data.uni, data.distCat, data.dist, data.researchArea, data.paper, data.whyExciting, data.connection, '[Your Name]', 'junior', '[your@email.com]', '', 'summers and school breaks');
+  document.getElementById('modalTitle').textContent = 'Email Draft — ' + data.prof;
+  document.getElementById('modalBody').textContent = draft;
+  document.getElementById('emailModal').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('emailModal')) closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('emailModal').classList.remove('open');
+}
+function copyModalEmail() {
+  navigator.clipboard.writeText(document.getElementById('modalBody').textContent);
+  alert('Copied!');
+}
+
+// ─── EMAIL BUILDER ────────────────────────────────────────────────────────────
+function buildDraft(profName, uniName, distCat, distLabel, researchArea, paper, whyExciting, connection, yourName, grade, yourEmail, yourPhone, availability) {
+  const gradeMap = { freshman: 'freshman', sophomore: 'sophomore', junior: 'junior', senior: 'senior' };
+  const gradeText = gradeMap[grade] || grade;
+  const needsHousing = distCat !== 'close';
+
+  const subject = `High School Research Interest — ${profName.replace('Dr.','').trim()} Lab / ${researchArea.replace(/🌿 /g,'')}`;
+
+  const housingPara = needsHousing ? `
+As ${uniName} is approximately ${distLabel} from Morristown, I wanted to ask whether any student housing, dormitory accommodations, or guest researcher arrangements might be available for the duration of a visit or research period. If housing is an option, I am fully prepared to cover the cost of my lodging myself for the entirety of my stay.
+` : '';
+
+  const phoneBlock = yourPhone ? `\n${yourPhone}` : '';
+
+  return `SUBJECT: ${subject}
+
+Dear ${profName},
+
+My name is ${yourName}, and I am a ${gradeText} at Morristown High School in Morristown, New Jersey, where I serve as President of the Engineering Club. I am writing to express my sincere interest in your research at ${uniName}.
+
+I recently came across your work on ${researchArea}. ${whyExciting}
+
+This research connects directly to my own interests and work: ${connection}
+
+I would be deeply honored to contribute to your lab or research group in whatever capacity would be most helpful — whether assisting with experiments, data collection, literature reviews, fabrication, or any other tasks. I am genuinely eager to learn, work hard, and contribute meaningfully to what your team is doing.
+
+Could you share when your current or upcoming research phase is scheduled, or when a student volunteer might best fit into your lab's timeline? I am available ${availability} and am happy to adjust around your needs.
+${housingPara}
+Thank you very much for your time and consideration. I would be thrilled to speak with you further about how I might contribute to your research. Please feel free to reach me at ${yourEmail} at your convenience.
+
+With great respect,
+${yourName}
+President, Engineering Club — Morristown High School
+${yourEmail}${phoneBlock}`;
+}
+
+function generateEmail() {
+  const yourName = document.getElementById('g_yourName').value || '[Your Name]';
+  const grade = document.getElementById('g_grade').value;
+  const yourEmail = document.getElementById('g_yourEmail').value || '[your@email.com]';
+  const yourPhone = document.getElementById('g_yourPhone').value;
+  const availability = document.getElementById('g_availability').value || 'summers and school breaks';
+  const profName = document.getElementById('g_profName').value || '[Professor Name]';
+  const uniName = document.getElementById('g_uniName').value || '[University Name]';
+  const researchArea = document.getElementById('g_researchArea').value || '[research area]';
+  const paper = document.getElementById('g_paper').value || '[paper title]';
+  const why = document.getElementById('g_why').value || '[why this excites you]';
+  const connect = document.getElementById('g_connect').value || '[how it connects to your work]';
+  const distVal = document.querySelector('input[name="g_dist"]:checked').value;
+  const driveTime = document.getElementById('g_driveTime').value || 'over an hour';
+
+  const draft = buildDraft(profName, uniName, distVal, driveTime, researchArea, paper, why, connect, yourName, grade, yourEmail, yourPhone, availability);
+
+  document.getElementById('emailText').textContent = draft;
+  document.getElementById('emailOutput').style.display = 'block';
+  document.getElementById('emailOutput').scrollIntoView({ behavior: 'smooth' });
+}
+
+function copyEmail() {
+  navigator.clipboard.writeText(document.getElementById('emailText').textContent);
+  const btn = document.querySelector('.copy-btn');
+  btn.textContent = 'Copied!';
+  setTimeout(() => btn.textContent = 'Copy to Clipboard', 2000);
+}
+
+// ─── TABS ─────────────────────────────────────────────────────────────────────
+function switchTab(tab) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
+
+  const sidebar = document.getElementById('sidebar');
+  if (tab === 'directory') {
+    sidebar.style.display = 'block';
+    renderSidebar();
+  } else {
+    sidebar.style.display = 'none';
+  }
+}
+
+function goToSchool(id) {
+  switchTab('directory');
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    if (b.textContent.includes('Professor Directory')) b.classList.add('active');
+    else b.classList.remove('active');
+  });
+  renderSidebar();
+  selectSchool(id);
+}
+
+// ─── HOUSING RADIO TOGGLE ─────────────────────────────────────────────────────
+document.querySelectorAll('input[name="g_dist"]').forEach(r => {
+  r.addEventListener('change', () => {
+    document.getElementById('driveTimeGroup').style.display =
+      document.querySelector('input[name="g_dist"]:checked').value === 'far' ? 'flex' : 'none';
+  });
+});
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+renderOverview();
+</script>
+</body>
+</html>
